@@ -21,6 +21,10 @@
     <link rel="stylesheet" type="text/css" href="theme/app-assets/vendors/css/vendors.min.css">
     <!-- END: Vendor CSS-->
 
+    @if (isset($styles))
+        {{ $styles }}
+    @endif
+
     <!-- BEGIN: Theme CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/app-assets/css/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/app-assets/css/bootstrap-extended.css') }}">
@@ -36,7 +40,7 @@
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('theme/assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
     <!-- END: Custom CSS-->
 
 </head>
@@ -181,15 +185,15 @@
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
+    @if (isset($scripts))
+        {{ $scripts }}
+    @endif
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
     <script src="{{ asset('theme/app-assets/js/core/app-menu.js') }}"></script>
     <script src="{{ asset('theme/app-assets/js/core/app.js') }}"></script>
     <!-- END: Theme JS-->
-
-    <!-- BEGIN: Page JS-->
-    <!-- END: Page JS-->
 
     <script>
         $(window).on('load', function() {
