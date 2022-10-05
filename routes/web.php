@@ -21,8 +21,20 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/test', function () {
-    return view('layouts.app-theme');
-});
+Route::get('/markets', function () {
+    return view('markets.index');
+})->name('markets.index');
+
+Route::get('/commodities', function () {
+    return view('commodities.index');
+})->name('commodities.index');
+
+Route::get('/prices', function () {
+    return view('prices.index');
+})->name('prices.index');
+
+Route::get('/users', function () {
+    return view('users.index');
+})->name('users.index');
 
 require __DIR__ . '/auth.php';
