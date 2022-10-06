@@ -9,7 +9,7 @@ $(function () {
         dt_complex_header_table = $(".dt-complex-header"),
         dt_row_grouping_table = $(".dt-row-grouping"),
         dt_multilingual_table = $(".dt-multilingual"),
-        assetPath = "theme/app-assets/";
+        assetPath = "app-assets/";
 
     if ($("body").attr("data-framework") === "laravel") {
         assetPath = $("body").attr("data-asset-path");

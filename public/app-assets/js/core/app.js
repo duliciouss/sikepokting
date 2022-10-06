@@ -34,7 +34,7 @@ window.colors = {
     var $html = $("html");
     var $body = $("body");
     var $textcolor = "#4e5154";
-    var assetPath = "theme/app-assets/";
+    var assetPath = "app-assets/";
 
     if ($("body").attr("data-framework") === "laravel") {
         assetPath = $("body").attr("data-asset-path");
@@ -1029,13 +1029,11 @@ window.colors = {
         } else if (formPasswordToggleInput.attr("type") === "password") {
             formPasswordToggleInput.attr("type", "text");
             if (feather) {
-                formPasswordToggleIcon
-                    .find("svg")
-                    .replaceWith(
-                        feather.icons["eye-off"].toSvg({
-                            class: "font-small-4",
-                        })
-                    );
+                formPasswordToggleIcon.find("svg").replaceWith(
+                    feather.icons["eye-off"].toSvg({
+                        class: "font-small-4",
+                    })
+                );
             }
         }
     });

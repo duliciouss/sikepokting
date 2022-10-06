@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Template;
 
 use Illuminate\View\Component;
 
-class NavigationThemeLayout extends Component
+class GuestLayout extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class NavigationThemeLayout extends Component
      */
     public function render()
     {
-        return view('layouts.navigation-theme');
+        return view('layouts.template.guest');
     }
 }
