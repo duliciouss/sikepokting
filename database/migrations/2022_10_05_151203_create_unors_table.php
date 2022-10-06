@@ -13,17 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('commodities', function (Blueprint $table) {
+        Schema::create('unors', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('code');
             $table->string('name');
-            $table->uuid('uom_id')->nullable();
-            $table->enum('type', ['GENERAL', 'DETAIL']);
-            $table->string('image_name');
-            $table->text('image_path');
-            $table->integer('order_report');
             $table->timestamps();
-
-            $table->foreign('uom_id')->references('id')->on('uoms')->onDelete('restrict')->onUpdate('restrict');
         });
     }
 
@@ -34,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('commodities');
+        Schema::dropIfExists('unors');
     }
 };

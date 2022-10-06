@@ -10,5 +10,7 @@ class Price extends Model
 {
     use HasFactory, Uuid;
 
+    public $incrementing = false;
+    protected $keyType = 'uuid';
     protected $guarded = [];
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommodityController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,9 +26,7 @@ Route::get('/markets', function () {
     return view('markets.index');
 })->name('markets.index');
 
-Route::get('/commodities', function () {
-    return view('commodities.index');
-})->name('commodities.index');
+Route::get('/commodities', [CommodityController::class, 'index'])->name('commodities.index');
 
 Route::get('/prices', function () {
     return view('prices.index');

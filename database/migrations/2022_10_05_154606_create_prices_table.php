@@ -19,7 +19,11 @@ return new class extends Migration
             $table->uuid('commodity_id');
             $table->string('price');
             $table->string('uom');
+            $table->datetime('date');
             $table->timestamps();
+
+            $table->foreign('market_id')->references('id')->on('markets')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('commodity_id')->references('id')->on('commodities')->onDelete('restrict')->onUpdate('restrict');
         });
     }
 

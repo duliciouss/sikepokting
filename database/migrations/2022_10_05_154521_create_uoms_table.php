@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('uoms', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('note');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
