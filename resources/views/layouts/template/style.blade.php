@@ -14,6 +14,7 @@
 
 <!-- BEGIN: Page CSS-->
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
+{{ $pageCss ?? '' }}
 <!-- END: Page CSS-->
 
 <!-- BEGIN: Custom CSS-->

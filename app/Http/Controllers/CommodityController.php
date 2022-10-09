@@ -16,4 +16,15 @@ class CommodityController extends Controller
 
         return view('commodities.index', compact('generalCommodities', 'detailCommodities', 'uoms'));
     }
+
+    public function show($id)
+    {
+        $commodity = Commodity::with('uom')->findOrFail($id);
+
+        return response()->json([
+            'success' => true,
+            'message' => __('Data berhasil didapatkan.'),
+            'data' => $commodity
+        ]);
+    }
 }

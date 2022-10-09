@@ -13,4 +13,14 @@ class Price extends Model
     public $incrementing = false;
     protected $keyType = 'uuid';
     protected $guarded = [];
+
+    public function market()
+    {
+        return $this->belongsTo(Market::class);
+    }
+
+    public function commodity()
+    {
+        return $this->belongsTo(Commodity::class);
+    }
 }

@@ -59,7 +59,7 @@
                                             placeholder="" autocomplete="off" autofocus />
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="uom-id" name="uom_id">Jenis</label>
+                                        <label class="form-label" for="uom-id" name="uom_id">Satuan</label>
                                         <select class="select2 form-select" id="uom-id">
                                             <option value="" selected disabled></option>
                                             @foreach ($uoms as $item)
@@ -80,7 +80,7 @@
             <!-- Basic table -->
             <div class="col-md-8 col-12">
                 <div class="card">
-                    <table class="table" id="datatable-market">
+                    <table class="table" id="datatable-commodities">
                         <thead>
                             <tr>
                                 <th>Nama Komoditas</th>
