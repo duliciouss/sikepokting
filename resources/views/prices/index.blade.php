@@ -11,20 +11,24 @@
         <link rel="stylesheet" type="text/css"
             href="{{ asset('app-assets/vendors/css/tables/datatable/rowGroup.bootstrap4.min.css') }}">
         <link rel="stylesheet" type="text/css"
-            href="{{ asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
-        <link rel="stylesheet" type="text/css"
             href="{{ asset('app-assets/vendors/css/forms/select/select2.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/toastr.min.css') }}">
+        <link rel="stylesheet" type="text/css"
+            href="{{ asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
+
     </x-slot>
 
     <x-slot name="pageCss">
         <link rel="stylesheet" type="text/css"
             href="{{ asset('app-assets/css/plugins/extensions/ext-component-toastr.css') }}">
+        <link rel="stylesheet" type="text/css"
+            href="{{ asset('app-assets/css/plugins/forms/pickers/form-flat-pickr.css') }}">
+
     </x-slot>
 
     <div class="content-header row">
-        <div class="content-header-left col-md-9 col-12 mb-2">
-            <div class="row breadcrumbs-top">
+        <div class="content-header-left col-12 mb-2 d-flex justify-content-between">
+            <div class="row breadcrumbs-top flex-fill">
                 <div class="col-12">
                     <h2 class="content-header-title float-start mb-0">Harga</h2>
                     <div class="breadcrumb-wrapper">
@@ -34,6 +38,51 @@
                             <li class="breadcrumb-item active">Harga
                             </li>
                         </ol>
+                    </div>
+                </div>
+            </div>
+            <div>
+                {{-- <button class="btn btn-success btn-icon" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i data-feather="download"></i> Unduh Laporan
+                </button> --}}
+                <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i data-feather="download" class="dropdown-icon"></i> Unduh Laporan
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#report-modal">Rekap
+                        Harian</a>
+                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#report-modal">Rekap
+                        Bulanan</a>
+                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#report-modal">Rekap
+                        Tahunan</a>
+                </div>
+                <div class="modal fade" id="report-modal" tabindex="-1" aria-labelledby="ReportModal"
+                    aria-hidden="true">
+                    <div class="modal-dialog  modal-xs modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Unduh Rekap Harian</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="my-1">
+                                    <label class="form-label" for="date">Pilih Tanggal</label>
+                                    <input type="text" class="form-control flatpickr-basic" name="date"
+                                        id="date" autofocus value="{{ now()->format('Y-m-d') }}">
+                                    <span class="date_error text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btn-icon" data-bs-dismiss="modal">
+                                    <i data-feather="x-square"></i>Batal
+                                </button>
+                                <button type="button" class="btn btn-success btn-icon">
+                                    <i data-feather="download"></i> Unduh
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -53,17 +102,14 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="my-1">
-                                        <label class="form-label" for="date">Tanggal
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <input type="date" class="form-control" name="date" id="date"
-                                            autofocus>
+                                        <label class="form-label" for="date">Tanggal</label>
+                                        <input type="text" class="form-control flatpickr-basic" name="date"
+                                            id="date" autofocus value="{{ now()->format('Y-m-d') }}">
                                         <span class="date_error text-danger"></span>
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="market_id">Pasar
-                                            <span class="text-danger">*</span>
-                                        </label>
+                                        <label class="form-label" for="market_id">Pasar</label>
+
                                         <select class="select2 form-select " name="market_id" id="market-id">
                                             <option value="" selected disabled></option>
                                             @foreach ($markets as $item)
@@ -73,9 +119,8 @@
                                         <span class="market_id_error text-danger"></span>
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="commodity_id">Komoditas
-                                            <span class="text-danger">*</span>
-                                        </label>
+                                        <label class="form-label" for="commodity_id">Komoditas</label>
+
                                         <select class="select2 form-select" name="commodity_id" id="commodity-id">
                                             <option value="" selected disabled></option>
                                             @foreach ($commodities as $item)
@@ -86,9 +131,8 @@
                                         <span class="commodity_id_error text-danger"></span>
                                     </div>
                                     <div class="mb-1">
-                                        <label id="label-price" class="form-label" for="price">Harga
-                                        </label>
-                                        <span class="text-danger">*</span>
+                                        <label id="label-price" class="form-label" for="price">Harga</label>
+
                                         <input type="number" class="form-control" name="price" id="price">
                                         <span class="price_error text-danger"></span>
                                     </div>
@@ -107,7 +151,7 @@
             <!-- Basic table -->
             <div class="col-md-8 col-12">
                 <div class="card">
-                    <table class="table" id="datatable-market">
+                    <table class="table text-nowrap" id="datatable-market">
                         <thead>
                             <tr>
                                 <th>Tanggal</th>
@@ -117,25 +161,6 @@
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach ($prices as $item)
-                                <tr class="text-nowrap">
-                                    <td>@date($item->date)</td>
-                                    <td>{{ $item->market->name }}</td>
-                                    <td>{{ $item->commodity->parent->name }} <br>
-                                        {{ $item->commodity->name }}</td>
-                                    <td>{{ $item->price }} per {{ $item->uom }}</td>
-                                    <td>
-                                        <button class="btn btn-warning btn-icon">
-                                            <i data-feather='edit'></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-icon">
-                                            <i data-feather='trash-2'></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
                     </table>
                 </div>
             </div>
@@ -155,14 +180,54 @@
         <script>
             $(document).ready(function() {
                 var table = $('table').DataTable({
+                    lengthMenu: [
+                        [10, 25, 50, -1],
+                        [10, 25, 50, "All"]
+                    ],
+                    serverSide: true,
+                    processing: true,
+                    responsive: true,
+                    ajax: {
+                        url: "/prices/json"
+                    },
+                    columns: [{
+                            data: 'date',
+                            name: 'date'
+                        },
+                        {
+                            data: 'market.name',
+                            name: 'market.name'
+                        },
+                        {
+                            data: 'commodity.name',
+                            name: 'commodity.name'
+                        },
+                        {
+                            data: 'price',
+                            name: 'price'
+                        },
+                        {
+                            data: 'aksi',
+                            name: 'aksi'
+                        }
+                    ],
+                    // columnDefs: [{
+                    //         targets: [1, 2],
+                    //         orderable: false
+                    //     },
+                    //     {
+                    //         targets: [1, 2],
+                    //         searchable: false
+                    //     }
+                    // ],
                     dom: '<"card-header border-bottom p-2"<"head-label"><"dt-action-buttons text-end"B>>' +
                         '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' +
                         't<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                 });
 
                 $('div.head-label').html('<h4 class="mb-0">Data Harga</h4>');
-
                 $('.select2').select2();
+                $('.flatpickr-basic').flatpickr();
 
                 // reset form
                 function reset() {
@@ -199,7 +264,7 @@
                         data: data,
                         success: function(result) {
                             reset();
-                            // table.ajax.reload();
+                            table.ajax.reload();
 
                             toastr.success(result.message, 'Sukses!', {
                                 closeButton: true,
