@@ -42,9 +42,6 @@
                 </div>
             </div>
             <div>
-                {{-- <button class="btn btn-success btn-icon" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <i data-feather="download"></i> Unduh Laporan
-                </button> --}}
                 <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     <i data-feather="download" class="dropdown-icon"></i> Unduh Laporan
@@ -233,13 +230,16 @@
                 $('.flatpickr-basic').flatpickr();
 
                 // reset form
-                function reset() {
-                    $('span.text-danger').text('');
-                    $('input.is-invalid').removeClass('is-invalid');
-                    $('select.is-invalid').removeClass('is-invalid');
+                function clearForm() {
                     $('form')[0].reset();
                     $('.select2').val();
                     $('.select2').select2().trigger('change');
+                }
+
+                function clearError() {
+                    $('span.text-danger').text('');
+                    $('input.is-invalid').removeClass('is-invalid');
+                    $('select.is-invalid').removeClass('is-invalid');
                 }
 
                 // get uom
@@ -266,14 +266,24 @@
                         type: 'POST',
                         data: data,
                         success: function(result) {
-                            reset();
-                            table.ajax.reload();
+                            if (result.success) {
+                                clearForm();
+                                clearError();
+                                table.ajax.reload();
 
-                            toastr.success(result.message, 'Sukses!', {
-                                closeButton: true,
-                                tapToDismiss: false,
-                                rtl: false
-                            });
+                                toastr.success(result.message, 'Sukses!', {
+                                    closeButton: true,
+                                    tapToDismiss: false,
+                                    rtl: false
+                                });
+                            } else {
+                                clearError();
+                                toastr.error(result.message, 'Error', {
+                                    closeButton: true,
+                                    tapToDismiss: false,
+                                    rtl: false
+                                });
+                            }
                         },
                         error: function(error) {
                             if (error.responseJSON.errors) {
