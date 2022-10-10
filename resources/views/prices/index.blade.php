@@ -66,22 +66,25 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
-                                <div class="my-1">
-                                    <label class="form-label" for="date">Pilih Tanggal</label>
-                                    <input type="text" class="form-control flatpickr-basic" name="date"
-                                        id="date" autofocus value="{{ now()->format('Y-m-d') }}">
-                                    <span class="date_error text-danger"></span>
+                            <form action="{{ route('prices.export') }}" method="POST">
+                                @csrf
+                                <div class="modal-body">
+                                    <div class="my-1">
+                                        <label class="form-label" for="date">Pilih Tanggal</label>
+                                        <input type="text" class="form-control flatpickr-basic" name="date"
+                                            id="date" autofocus value="{{ now()->format('Y-m-d') }}">
+                                        <span class="date_error text-danger"></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btn-icon" data-bs-dismiss="modal">
-                                    <i data-feather="x-square"></i>Batal
-                                </button>
-                                <button type="button" class="btn btn-success btn-icon">
-                                    <i data-feather="download"></i> Unduh
-                                </button>
-                            </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-icon" data-bs-dismiss="modal">
+                                        <i data-feather="x-square"></i>Batal
+                                    </button>
+                                    <button type="submit" class="btn btn-success btn-icon">
+                                        <i data-feather="download"></i> Unduh
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -96,7 +99,7 @@
                         <h4 class="card-title">Form Tambah Harga</h4>
                     </div>
                     <div class="card-body">
-                        <form id="form-create-price" class="form form-vertical" action="{{ route('prices.store') }}"
+                        <form class="form form-vertical form-price" action="{{ route('prices.store') }}"
                             method="POST">
                             @csrf
                             <div class="row">
@@ -252,7 +255,7 @@
                 });
 
                 // store price
-                $('form').on('submit', function(e) {
+                $('form.form-price').on('submit', function(e) {
                     e.preventDefault();
 
                     const url = $(this).attr('action');

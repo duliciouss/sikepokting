@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PriceExport;
 use App\Http\Requests\PriceStoreRequest;
 use App\Models\Commodity;
 use App\Models\Market;
@@ -10,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PriceController extends Controller
 {
@@ -24,7 +26,6 @@ class PriceController extends Controller
 
     public function json()
     {
-        // dd('a');
         $prices = Price::with(['market', 'commodity'])->get();
 
         return DataTables::of($prices)->addColumn('aksi', function ($data) {
@@ -35,13 +36,6 @@ class PriceController extends Controller
         })->editColumn('price', function ($data) {
             return $data->price . ' per ' . $data->uom;
         })->toJson();
-        // dd($prices);
-    }
-
-
-    public function create()
-    {
-        # code...
     }
 
     public function store(PriceStoreRequest $request)
@@ -69,23 +63,8 @@ class PriceController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function export()
     {
-        # code...
-    }
-
-    public function edit($id)
-    {
-        # code...
-    }
-
-    public function update(Request $request, $id)
-    {
-        # code...
-    }
-
-    public function destroy($id)
-    {
-        //
+        return Excel::download(new PriceExport, 'price-' . now() . '.xlsx');
     }
 }

@@ -25,6 +25,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'prices'], function () {
         Route::get('/', [PriceController::class, 'index'])->name('prices.index');
         Route::post('/', [PriceController::class, 'store'])->name('prices.store');
+        // Route::get('/export', function () {
+        //     return view('prices.export');
+        // })->name('prices.export');
+        Route::post('/export', [PriceController::class, 'export'])->name('prices.export');
     });
 
     Route::get('/users', function () {
