@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('price');
             $table->string('uom');
             $table->datetime('date');
+            $table->integer('status')->default(0)->comment('0: pending; 1: terkirim; 2: diterima');
             $table->timestamps();
 
             $table->foreign('market_id')->references('id')->on('markets')->onDelete('restrict')->onUpdate('restrict');

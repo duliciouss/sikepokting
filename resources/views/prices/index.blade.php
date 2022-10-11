@@ -91,67 +91,124 @@
     <div class="content-body">
         <div class="row">
             <div class="col-md-4 col-12">
-                <div class="card">
-                    <div class="card-header border-bottom">
-                        <h4 class="card-title">Form Tambah Harga</h4>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header border-bottom">
+                                <h4 class="card-title">Form Tambah Harga</h4>
+                            </div>
+                            <div class="card-body">
+                                <form class="form form-vertical form-price" action="{{ route('prices.store') }}"
+                                    method="POST">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="my-1">
+                                                <label class="form-label" for="date">Tanggal</label>
+                                                <input type="text" class="form-control flatpickr-basic"
+                                                    name="date" id="date" autofocus
+                                                    value="{{ now()->format('Y-m-d') }}">
+                                                <span class="date_error text-danger"></span>
+                                            </div>
+                                            <div class="mb-1">
+                                                <label class="form-label" for="market_id">Pasar</label>
+
+                                                <select class="select2 form-select " name="market_id" id="market-id">
+                                                    <option value="" selected disabled></option>
+                                                    @foreach ($markets as $item)
+                                                        <option value="{{ $item->id }}">{{ $item->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="market_id_error text-danger"></span>
+                                            </div>
+                                            <div class="mb-1">
+                                                <label class="form-label" for="commodity_id">Komoditas</label>
+
+                                                <select class="select2 form-select" name="commodity_id"
+                                                    id="commodity-id">
+                                                    <option value="" selected disabled></option>
+                                                    @foreach ($commodities as $item)
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->parent->name }}:
+                                                            {{ $item->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="commodity_id_error text-danger"></span>
+                                            </div>
+                                            <div class="mb-1">
+                                                <label id="label-price" class="form-label"
+                                                    for="price">Harga</label>
+
+                                                <input type="number" class="form-control" name="price"
+                                                    id="price">
+                                                <span class="price_error text-danger"></span>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i data-feather='save'></i> Simpan
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <form class="form form-vertical form-price" action="{{ route('prices.store') }}"
-                            method="POST">
-                            @csrf
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="my-1">
-                                        <label class="form-label" for="date">Tanggal</label>
-                                        <input type="text" class="form-control flatpickr-basic" name="date"
-                                            id="date" autofocus value="{{ now()->format('Y-m-d') }}">
-                                        <span class="date_error text-danger"></span>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header border-bottom">
+                                <h4 class="card-title">Status Kirim Data</h4>
+                            </div>
+                            <div class="card-body">
+                                <form class="form form-vertical form-price" action="{{ route('prices.store') }}"
+                                    method="POST">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="my-1">
+                                                <input type="text" class="form-control flatpickr-basic"
+                                                    name="date_status" id="date-status" autofocus
+                                                    value="{{ now()->format('Y-m-d') }}">
+                                                <span class="date_error text-danger"></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="market_id">Pasar</label>
-
-                                        <select class="select2 form-select " name="market_id" id="market-id">
-                                            <option value="" selected disabled></option>
-                                            @foreach ($markets as $item)
-                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        <span class="market_id_error text-danger"></span>
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="commodity_id">Komoditas</label>
-
-                                        <select class="select2 form-select" name="commodity_id" id="commodity-id">
-                                            <option value="" selected disabled></option>
-                                            @foreach ($commodities as $item)
-                                                <option value="{{ $item->id }}">{{ $item->parent->name }}:
-                                                    {{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        <span class="commodity_id_error text-danger"></span>
-                                    </div>
-                                    <div class="mb-1">
-                                        <label id="label-price" class="form-label" for="price">Harga</label>
-
-                                        <input type="number" class="form-control" name="price" id="price">
-                                        <span class="price_error text-danger"></span>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary">
-                                            <i data-feather='save'></i> Simpan
-                                        </button>
-                                    </div>
+                                </form>
+                                <table class="mb-2">
+                                    <tbody>
+                                        <tr>
+                                            <td class="pe-1 fw-bold">Tanggal:</td>
+                                            <td> <span id="get-date"> Selasa, 10 Oktober 2022</span> </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pe-1 fw-bold">Status:</td>
+                                            <td>
+                                                <span id="get-status" class="badge bg-secondary"> Tertunda </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pe-1 fw-bold">Jumlah Komoditas:</td>
+                                            <td> <span id="get-commodities-count"> 20 Terisi </span> </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-info">
+                                        <i data-feather='send'></i> Kirim
+                                    </button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
             <!-- Basic table -->
             <div class="col-md-8 col-12">
                 <div class="card">
-                    <table class="table text-nowrap" id="datatable-market">
+                    <table class="table text-nowrap" id="datatable-price">
                         <thead>
                             <tr>
                                 <th>Tanggal</th>
@@ -179,7 +236,7 @@
     <x-slot name="pageJs">
         <script>
             $(document).ready(function() {
-                var table = $('table').DataTable({
+                var table = $('#datatable-price').DataTable({
                     lengthMenu: [
                         [10, 25, 50, -1],
                         [10, 25, 50, "All"]
@@ -229,14 +286,14 @@
                 $('.select2').select2();
                 $('.flatpickr-basic').flatpickr();
 
-                // reset form
                 function clearForm() {
-                    $('form')[0].reset();
+                    $('form').trigger('reset');
                     $('.select2').val();
                     $('.select2').select2().trigger('change');
                 }
 
                 function clearError() {
+                    console.log('clear error');
                     $('span.text-danger').text('');
                     $('input.is-invalid').removeClass('is-invalid');
                     $('select.is-invalid').removeClass('is-invalid');
@@ -301,6 +358,12 @@
                             }
                         }
                     });
+                });
+
+                $('#date-status').change(function() {
+                    $('#get-date').text($(this).val());
+                    $('#get-status').text('terkirim');
+                    $('#get-commodities-count').text(12);
                 });
             });
         </script>
