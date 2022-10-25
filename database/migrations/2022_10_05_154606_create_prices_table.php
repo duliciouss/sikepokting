@@ -16,10 +16,7 @@ return new class extends Migration
         Schema::create('prices', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('market_id');
-            $table->uuid('commodity_id');
-            $table->string('price');
-            $table->string('uom');
-            $table->datetime('date');
+            $table->dateTime('date');
             $table->integer('status')->default(0)->comment('0: pending; 1: terkirim; 2: diterima');
             $table->timestamps();
 

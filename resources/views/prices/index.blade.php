@@ -1,5 +1,5 @@
 <x-template.app-layout>
-    <x-slot name="title">Harga</x-slot>
+    <x-slot name="title">{{ __('Harga') }}</x-slot>
 
     <x-slot name="vendorCss">
         <link rel="stylesheet" type="text/css"
@@ -15,7 +15,6 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/toastr.min.css') }}">
         <link rel="stylesheet" type="text/css"
             href="{{ asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
-
     </x-slot>
 
     <x-slot name="pageCss">
@@ -23,19 +22,18 @@
             href="{{ asset('app-assets/css/plugins/extensions/ext-component-toastr.css') }}">
         <link rel="stylesheet" type="text/css"
             href="{{ asset('app-assets/css/plugins/forms/pickers/form-flat-pickr.css') }}">
-
     </x-slot>
 
     <div class="content-header row">
         <div class="content-header-left col-12 mb-2 d-flex justify-content-between">
             <div class="row breadcrumbs-top flex-fill">
                 <div class="col-12">
-                    <h2 class="content-header-title float-start mb-0">Harga</h2>
+                    <h2 class="content-header-title float-start mb-0">{{ __('Harga') }}</h2>
                     <div class="breadcrumb-wrapper">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
                             </li>
-                            <li class="breadcrumb-item active">Harga
+                            <li class="breadcrumb-item active">{{ __('Harga') }}
                             </li>
                         </ol>
                     </div>
@@ -44,22 +42,22 @@
             <div>
                 <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <i data-feather="download" class="dropdown-icon"></i> Unduh Laporan
+                    <i data-feather="download" class="dropdown-icon"></i> {{ __('Unduh Laporan') }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#report-modal">Rekap
-                        Harian</a>
-                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#report-modal">Rekap
-                        Bulanan</a>
-                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#report-modal">Rekap
-                        Tahunan</a>
+                    <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                        data-bs-target="#report-modal">{{ __('Rekap Harian') }}</a>
+                    <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                        data-bs-target="#report-modal">{{ __('Rekap Bulanan') }}</a>
+                    <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                        data-bs-target="#report-modal">{{ __('Rekap Tahunan') }}</a>
                 </div>
                 <div class="modal fade" id="report-modal" tabindex="-1" aria-labelledby="ReportModal"
                     aria-hidden="true">
                     <div class="modal-dialog  modal-xs modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Unduh Rekap Harian</h5>
+                                <h5 class="modal-title">{{ __('Unduh Rekap Harian') }}</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -67,7 +65,7 @@
                                 @csrf
                                 <div class="modal-body">
                                     <div class="my-1">
-                                        <label class="form-label" for="date">Pilih Tanggal</label>
+                                        <label class="form-label" for="date">{{ __('Pilih Tanggal') }}</label>
                                         <input type="text" class="form-control flatpickr-basic" name="date"
                                             id="date" autofocus value="{{ now()->format('Y-m-d') }}">
                                         <span class="date_error text-danger"></span>
@@ -75,10 +73,10 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary btn-icon" data-bs-dismiss="modal">
-                                        <i data-feather="x-square"></i>Batal
+                                        <i data-feather="x-square"></i>{{ __('Batal') }}
                                     </button>
                                     <button type="submit" class="btn btn-success btn-icon">
-                                        <i data-feather="download"></i> Unduh
+                                        <i data-feather="download"></i> {{ __('Unduh') }}
                                     </button>
                                 </div>
                             </form>
@@ -95,7 +93,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header border-bottom">
-                                <h4 class="card-title">Form Tambah Harga</h4>
+                                <h4 class="card-title">{{ __('Form Tambah Harga') }}</h4>
                             </div>
                             <div class="card-body">
                                 <form class="form form-vertical form-price" action="{{ route('prices.store') }}"
@@ -104,7 +102,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="my-1">
-                                                <label class="form-label" for="date">Tanggal</label>
+                                                <label class="form-label" for="date">{{ __('Tanggal') }}</label>
                                                 <input type="text" class="form-control flatpickr-basic"
                                                     name="date" id="date" autofocus
                                                     value="{{ now()->format('Y-m-d') }}">
@@ -146,7 +144,7 @@
                                             </div>
                                             <div class="d-flex justify-content-end">
                                                 <button type="submit" class="btn btn-primary">
-                                                    <i data-feather='save'></i> Simpan
+                                                    <i data-feather='save'></i> {{ __('Simpan') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -158,7 +156,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header border-bottom">
-                                <h4 class="card-title">Status Kirim Data</h4>
+                                <h4 class="card-title">{{ __('Status Kirim Data') }}</h4>
                             </div>
                             <div class="card-body">
                                 <form class="form form-vertical form-price" action="{{ route('prices.store') }}"
@@ -175,27 +173,29 @@
                                         </div>
                                     </div>
                                 </form>
-                                <table class="mb-2">
-                                    <tbody>
-                                        <tr>
-                                            <td class="pe-1 fw-bold">Tanggal:</td>
-                                            <td> <span id="get-date"> Selasa, 10 Oktober 2022</span> </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pe-1 fw-bold">Status:</td>
-                                            <td>
-                                                <span id="get-status" class="badge bg-secondary"> Tertunda </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pe-1 fw-bold">Jumlah Komoditas:</td>
-                                            <td> <span id="get-commodities-count"> 20 Terisi </span> </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div>
+                                    <table class="table table-sm mb-2">
+                                        <tbody>
+                                            <tr>
+                                                <td class="pe-1 fw-bold">{{ __('Tanggal:') }}</td>
+                                                <td> <span id="get-date"> Selasa, 10 Oktober 2022</span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pe-1 fw-bold">{{ __('Status:') }}</td>
+                                                <td>
+                                                    <span id="get-status" class="badge bg-secondary"> Tertunda </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pe-1 fw-bold">{{ __('Jumlah Komoditas:') }}</td>
+                                                <td> <span id="get-commodities-count"> 20 Terisi </span> </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-info">
-                                        <i data-feather='send'></i> Kirim
+                                        <i data-feather='send'></i> {{ __('Kirim') }}
                                     </button>
                                 </div>
                             </div>
@@ -211,11 +211,11 @@
                     <table class="table text-nowrap" id="datatable-price">
                         <thead>
                             <tr>
-                                <th>Tanggal</th>
-                                <th>Pasar</th>
-                                <th>Komoditas</th>
-                                <th>Harga</th>
-                                <th>Aksi</th>
+                                <th>{{ __('Tanggal') }}</th>
+                                <th>{{ __('Pasar') }}</th>
+                                <th>{{ __('Komoditas') }}</th>
+                                <th>{{ __('Harga') }}</th>
+                                <th>{{ __('Aksi') }}</th>
                             </tr>
                         </thead>
                     </table>
