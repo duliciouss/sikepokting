@@ -67,7 +67,7 @@
                                     <div class="my-1">
                                         <label class="form-label" for="date">{{ __('Pilih Tanggal') }}</label>
                                         <input type="text" class="form-control flatpickr-basic" name="date"
-                                            id="date" autofocus value="{{ now()->format('Y-m-d') }}">
+                                            id="date" autofocus value="{{ now()->format('d-m-Y') }}">
                                         <span class="date_error text-danger"></span>
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header border-bottom">
-                                <h4 class="card-title">{{ __('Form Tambah Harga') }}</h4>
+                                <h4 class="card-title form-title">{{ __('Form Tambah Harga') }}</h4>
                             </div>
                             <div class="card-body">
                                 <form class="form form-vertical form-price" action="{{ route('prices.store') }}"
@@ -105,23 +105,28 @@
                                                 <label class="form-label" for="date">{{ __('Tanggal') }}</label>
                                                 <input type="text" class="form-control flatpickr-basic"
                                                     name="date" id="date" autofocus
-                                                    value="{{ now()->format('Y-m-d') }}">
+                                                    value="{{ now()->format('d-m-Y') }}">
                                                 <span class="date_error text-danger"></span>
                                             </div>
-                                            <div class="mb-1">
-                                                <label class="form-label" for="market_id">Pasar</label>
-
+                                            <div
+                                                class="mb-1 {{ auth()->user()->market_id === null ? '' : 'd-none' }}">
+                                                <label class="form-label" for="market_id">{{ __('Pasar') }}</label>
                                                 <select class="select2 form-select " name="market_id" id="market-id">
-                                                    <option value="" selected disabled></option>
+                                                    <option value=""
+                                                        {{ auth()->user()->market_id === null ? 'selected' : '' }}
+                                                        disabled></option>
                                                     @foreach ($markets as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->name }}
+                                                        <option value="{{ $item->id }}"
+                                                            {{ auth()->user()->market_id === $item->id ? 'selected' : '' }}>
+                                                            {{ $item->name }}
                                                         </option>
                                                     @endforeach
                                                 </select>
                                                 <span class="market_id_error text-danger"></span>
                                             </div>
                                             <div class="mb-1">
-                                                <label class="form-label" for="commodity_id">Komoditas</label>
+                                                <label class="form-label"
+                                                    for="commodity_id">{{ __('Komoditas') }}</label>
 
                                                 <select class="select2 form-select" name="commodity_id"
                                                     id="commodity-id">
@@ -142,62 +147,17 @@
                                                     id="price">
                                                 <span class="price_error text-danger"></span>
                                             </div>
-                                            <div class="d-flex justify-content-end">
+                                            <div class="d-flex justify-content-between">
                                                 <button type="submit" class="btn btn-primary">
                                                     <i data-feather='save'></i> {{ __('Simpan') }}
+                                                </button>
+                                                <button type="button" class="btn btn-secondary btn-cencel d-none">
+                                                    <i data-feather='x-square'></i> {{ __('Batal') }}
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header border-bottom">
-                                <h4 class="card-title">{{ __('Status Kirim Data') }}</h4>
-                            </div>
-                            <div class="card-body">
-                                <form class="form form-vertical form-price" action="{{ route('prices.store') }}"
-                                    method="POST">
-                                    @csrf
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="my-1">
-                                                <input type="text" class="form-control flatpickr-basic"
-                                                    name="date_status" id="date-status" autofocus
-                                                    value="{{ now()->format('Y-m-d') }}">
-                                                <span class="date_error text-danger"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <div>
-                                    <table class="table table-sm mb-2">
-                                        <tbody>
-                                            <tr>
-                                                <td class="pe-1 fw-bold">{{ __('Tanggal:') }}</td>
-                                                <td> <span id="get-date"> Selasa, 10 Oktober 2022</span> </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pe-1 fw-bold">{{ __('Status:') }}</td>
-                                                <td>
-                                                    <span id="get-status" class="badge bg-secondary"> Tertunda </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pe-1 fw-bold">{{ __('Jumlah Komoditas:') }}</td>
-                                                <td> <span id="get-commodities-count"> 20 Terisi </span> </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-info">
-                                        <i data-feather='send'></i> {{ __('Kirim') }}
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -236,6 +196,7 @@
     <x-slot name="pageJs">
         <script>
             $(document).ready(function() {
+                // init
                 var table = $('#datatable-price').DataTable({
                     lengthMenu: [
                         [10, 25, 50, -1],
@@ -268,15 +229,6 @@
                             name: 'aksi'
                         }
                     ],
-                    // columnDefs: [{
-                    //         targets: [1, 2],
-                    //         orderable: false
-                    //     },
-                    //     {
-                    //         targets: [1, 2],
-                    //         searchable: false
-                    //     }
-                    // ],
                     dom: '<"card-header border-bottom p-2"<"head-label"><"dt-action-buttons text-end"B>>' +
                         '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' +
                         't<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
@@ -284,7 +236,9 @@
 
                 $('div.head-label').html('<h4 class="mb-0">Data Harga</h4>');
                 $('.select2').select2();
-                $('.flatpickr-basic').flatpickr();
+                $('.flatpickr-basic').flatpickr({
+                    dateFormat: 'd-m-Y'
+                });
 
                 function clearForm() {
                     $('form').trigger('reset');
@@ -330,15 +284,15 @@
 
                                 toastr.success(result.message, 'Sukses!', {
                                     closeButton: true,
-                                    tapToDismiss: false,
-                                    rtl: false
+                                    tapToDismiss: true,
+                                    progressBar: true
                                 });
                             } else {
                                 clearError();
                                 toastr.error(result.message, 'Error', {
                                     closeButton: true,
-                                    tapToDismiss: false,
-                                    rtl: false
+                                    tapToDismiss: true,
+                                    progressBar: true
                                 });
                             }
                         },
@@ -360,10 +314,31 @@
                     });
                 });
 
-                $('#date-status').change(function() {
-                    $('#get-date').text($(this).val());
-                    $('#get-status').text('terkirim');
-                    $('#get-commodities-count').text(12);
+                // edit price
+                $(document).on('click', '.btn-edit', function() {
+                    clearForm();
+
+                    const priceId = $(this).attr('data-id');
+                    $.ajax({
+                        url: '/prices/' + priceId + '/edit',
+                        type: 'GET',
+                        success: function(result) {
+                            result = result.data;
+                            console.log(result);
+                            $('form input[name="date"]').val(result.date);
+                            $('form input[name="price"]').val(result.price);
+                            $('.form-title').text('Form Ubah Harga');
+                            $('.btn-cencel').removeClass('d-none');
+                        }
+                    });
+                });
+
+                // cencel edit
+                $(document).on('click', '.btn-cencel', function() {
+                    $(this).addClass('d-none');
+                    $('.form-title').text('Form Tambah Harga');
+                    clearForm();
+                    clearError();
                 });
             });
         </script>

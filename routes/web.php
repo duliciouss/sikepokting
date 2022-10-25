@@ -20,15 +20,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/commodities', [CommodityController::class, 'index'])->name('commodities.index');
     Route::get('/commodities/{commodity}', [CommodityController::class, 'show'])->name('commodities.show');
 
-    Route::get('/prices/json', [PriceController::class, 'json'])->name('prices.json');
-
+    Route::resource('prices', PriceController::class)->except('show');
     Route::group(['prefix' => 'prices'], function () {
-        Route::get('/', [PriceController::class, 'index'])->name('prices.index');
-        Route::post('/', [PriceController::class, 'store'])->name('prices.store');
-        // Route::get('/export', function () {
-        //     return view('prices.export');
-        // })->name('prices.export');
-        Route::post('/export', [PriceController::class, 'export'])->name('prices.export');
+        Route::get('json', [PriceController::class, 'json'])->name('prices.json');
+        Route::post('export', [PriceController::class, 'export'])->name('prices.export');
     });
 
     Route::get('/users', function () {
