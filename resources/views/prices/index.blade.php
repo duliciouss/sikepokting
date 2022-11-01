@@ -114,7 +114,9 @@
                                                 <select class="select2 form-select " name="market_id" id="market-id">
                                                     <option value=""
                                                         {{ auth()->user()->market_id === null ? 'selected' : '' }}
-                                                        disabled></option>
+                                                        disabled>
+                                                        {{ __('Pilih Pasar...') }}
+                                                    </option>
                                                     @foreach ($markets as $item)
                                                         <option value="{{ $item->id }}"
                                                             {{ auth()->user()->market_id === $item->id ? 'selected' : '' }}>
@@ -127,10 +129,11 @@
                                             <div class="mb-1">
                                                 <label class="form-label"
                                                     for="commodity_id">{{ __('Komoditas') }}</label>
-
                                                 <select class="select2 form-select" name="commodity_id"
                                                     id="commodity-id">
-                                                    <option value="" selected disabled></option>
+                                                    <option value="" selected disabled>
+                                                        {{ __('Pilih Komoditas...') }}
+                                                    </option>
                                                     @foreach ($commodities as $item)
                                                         <option value="{{ $item->id }}">
                                                             {{ $item->parent->name }}:
