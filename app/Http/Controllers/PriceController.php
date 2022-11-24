@@ -32,7 +32,7 @@ class PriceController extends Controller
             if ($data->status !== 0) {
                 $isDisabled = 'disabled';
             }
-            return '<button type="button" class="btn btn-sm btn-warning btn-edit" id="btn-edit" data-id="' . $data->id . '" ' . $isDisabled . '> Edit</button> <button type="button" class="btn btn-sm btn-danger btn-delete" id="btn-delete" data-id="' . $data->id . '" ' . $isDisabled . '> Hapus</button>';
+            return '<button type="button" class="btn btn-sm btn-warning btn-edit" id="btn-edit" data-url="prices/' . $data->id . '" data-method="PUT" data-id="' . $data->id . '" ' . $isDisabled . '> Edit</button> <button type="button" class="btn btn-sm btn-danger btn-delete" id="btn-delete" data-id="' . $data->id . '" ' . $isDisabled . '> Hapus</button>';
         })->rawColumns(['aksi'])->editColumn('date', function ($data) {
             $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $data->date)->format('d F Y');
             return $formatedDate;
@@ -78,9 +78,27 @@ class PriceController extends Controller
         ]);
     }
 
-    public function update()
+    public function update(Request $request, $id)
     {
-        //
+        $price = Price::findOrFail($id);
+        $price->update([
+            'price' => $request->price
+        ]);
+        return response()->json([
+            'success' => true,
+            'message' => __('Data berhasil diubah.'),
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $price = Price::findOrFail($id);
+        $price->delete();
+        return response()->json([
+            'success' => true,
+            'message' => __('Data berhasil dihapus.'),
+            'data' => $price
+        ]);
     }
 
     public function export()

@@ -15,11 +15,15 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/toastr.min.css') }}">
         <link rel="stylesheet" type="text/css"
             href="{{ asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
+        <link rel="stylesheet" type="text/css"
+            href="{{ asset('app-assets/vendors/css/extensions/sweetalert2.min.css') }}">
     </x-slot>
 
     <x-slot name="pageCss">
         <link rel="stylesheet" type="text/css"
             href="{{ asset('app-assets/css/plugins/extensions/ext-component-toastr.css') }}">
+        <link rel="stylesheet" type="text/css"
+            href="{{ asset('app-assets/css/plugins/extensions/ext-component-sweet-alerts.css') }}">
         <link rel="stylesheet" type="text/css"
             href="{{ asset('app-assets/css/plugins/forms/pickers/form-flat-pickr.css') }}">
     </x-slot>
@@ -189,11 +193,13 @@
     </div>
 
     <x-slot name="pageVendorJs">
+        <script src="{{ asset('assets/js/jquery-dateformat.min.js') }}"></script>
         <script src="{{ asset('app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('app-assets/vendors/js/tables/datatable/dataTables.bootstrap5.min.js') }}"></script>
         <script src="{{ asset('app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
         <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
         <script src="{{ asset('app-assets/vendors/js/extensions/toastr.min.js') }}"></script>
+        <script src="{{ asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
     </x-slot>
 
     <x-slot name="pageJs">
@@ -244,9 +250,16 @@
                 });
 
                 function clearForm() {
+                    $('.form-title').text('Form Tambah Harga');
                     $('form').trigger('reset');
                     $('.select2').val();
                     $('.select2').select2().trigger('change');
+                    $('form input[name="date"]').prop('disabled', false);
+                    $('form select[name="market_id"]').prop('disabled', false);
+                    $('form select[name="commodity_id"]').prop('disabled', false);
+                    $('.btn-cencel').addClass('d-none');
+                    $('form').attr('method', 'POST');
+                    $('form').attr('action', '/prices');
                 }
 
                 function clearError() {
@@ -259,13 +272,16 @@
                 // get uom
                 $('#commodity-id').change(function() {
                     commodityId = $(this).val();
-                    $.ajax({
-                        url: '/commodities/' + commodityId,
-                        type: 'GET',
-                        success: function(result) {
-                            $('#label-price').text('Harga per ' + result.data.uom.name);
-                        }
-                    });
+                    if (commodityId !== null) {
+                        $.ajax({
+                            url: '/commodities/' + commodityId,
+                            type: 'GET',
+                            success: function(result) {
+                                $('#label-price').text('Harga per ' + result.data.uom.name);
+                            }
+                        });
+                    }
+
                 });
 
                 // store price
@@ -273,11 +289,12 @@
                     e.preventDefault();
 
                     const url = $(this).attr('action');
+                    const method = $(this).attr('method');
                     const data = $(this).serialize();
 
                     $.ajax({
                         url,
-                        type: 'POST',
+                        type: method,
                         data: data,
                         success: function(result) {
                             if (result.success) {
@@ -320,16 +337,30 @@
                 // edit price
                 $(document).on('click', '.btn-edit', function() {
                     clearForm();
-
+                    clearError();
                     const priceId = $(this).attr('data-id');
+                    const method = $(this).attr('data-method');
+                    const url = $(this).attr('data-url');
+
                     $.ajax({
                         url: '/prices/' + priceId + '/edit',
                         type: 'GET',
                         success: function(result) {
                             result = result.data;
-                            console.log(result);
-                            $('form input[name="date"]').val(result.date);
+                            $('form').attr('method', method);
+                            $('form').attr('action', url);
+                            console.log(url);
+                            $('form input[name="date"]').prop('disabled', true);
+                            $('form input[name="date"]').val($.format.date(result.date,
+                                "dd-MM-yyyy"));
+                            $('form select[name="market_id"]').val(result.market_id);
+                            $('form select[name="market_id"]').select2().trigger('change');
+                            $('form select[name="market_id"]').prop('disabled', true);
+                            $('form select[name="commodity_id"]').val(result.commodity_id);
+                            $('form select[name="commodity_id"]').select2().trigger('change');
+                            $('form select[name="commodity_id"]').prop('disabled', true);
                             $('form input[name="price"]').val(result.price);
+                            $('form input[name="price"]').focus();
                             $('.form-title').text('Form Ubah Harga');
                             $('.btn-cencel').removeClass('d-none');
                         }
@@ -338,11 +369,55 @@
 
                 // cencel edit
                 $(document).on('click', '.btn-cencel', function() {
-                    $(this).addClass('d-none');
-                    $('.form-title').text('Form Tambah Harga');
                     clearForm();
                     clearError();
                 });
+
+                $(document).on('click', '.btn-delete', function(e) {
+                    e.preventDefault();
+                    let id = $(this).data('id');
+                    console.log(id);
+                    Swal.fire({
+                        title: 'Anda yakin?',
+                        text: "Data yang sudah dihapus tidak akan kembali!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, hapus!',
+                        cancelButtonText: 'Batal',
+                        customClass: {
+                            confirmButton: 'btn btn-primary',
+                            cancelButton: 'btn btn-outline-danger ms-1'
+                        },
+                        buttonsStyling: false
+                    }).then(function(result) {
+                        if (result.value) {
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                url: '/prices/' + id,
+                                method: 'delete',
+                                success: function(result) {
+                                    if (result.success) {
+                                        toastr.success(result.message, 'Sukses!', {
+                                            closeButton: true,
+                                            tapToDismiss: true,
+                                            progressBar: true
+                                        });
+                                        table.ajax.reload();
+                                        clearForm();
+                                        clearError();
+                                    } else {
+                                        toastr.error(result.message, 'Error');
+                                    }
+                                },
+                                error: function(error) {
+                                    toastr.error(error.statusText, 'Error');
+                                }
+                            })
+                        }
+                    });
+                })
             });
         </script>
     </x-slot>
