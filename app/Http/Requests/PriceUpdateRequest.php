@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PriceStoreRequest extends FormRequest
+class PriceUpdateRequest extends FormRequest
 {
     public function authorize()
     {
@@ -14,10 +14,7 @@ class PriceStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => 'required',
-            'market_id' => 'required',
-            'commodity_id' => 'required',
-            'price' => 'required',
+            'price' => 'required'
         ];
     }
 }

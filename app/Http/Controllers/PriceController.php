@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\PriceExport;
 use App\Http\Requests\PriceStoreRequest;
+use App\Http\Requests\PriceUpdateRequest;
 use App\Models\Commodity;
 use App\Models\Market;
 use App\Models\Price;
@@ -78,7 +79,7 @@ class PriceController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(PriceUpdateRequest $request, $id)
     {
         $price = Price::findOrFail($id);
         $price->update([
