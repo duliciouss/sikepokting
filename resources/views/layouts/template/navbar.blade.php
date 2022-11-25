@@ -37,10 +37,15 @@
                         <i class="me-50" data-feather="user"></i>
                         Profile
                     </a>
-                    <a class="dropdown-item" href="#">
-                        <i class="me-50" data-feather="power"></i>
-                        Logout
-                    </a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <a class="dropdown-item" href="#"
+                            onclick="event.preventDefault();
+                    this.closest('form').submit();">
+                            <i class="me-50" data-feather="power"></i>
+                            Logout
+                        </a>
+                    </form>
                 </div>
             </li>
         </ul>
