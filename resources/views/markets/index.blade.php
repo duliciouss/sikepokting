@@ -60,7 +60,7 @@
                                     @csrf
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="mb-1">
+                                            <div class="my-1">
                                                 <label class="form-label" for="unor_id">{{ __('Unit Kerja') }}</label>
                                                 <select class="select2 form-select" name="unor_id" id="unor-id">
                                                     <option value="" selected disabled>

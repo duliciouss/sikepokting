@@ -60,7 +60,7 @@
                                     @csrf
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="mb-1">
+                                            <div class="my-1">
                                                 <label class="form-label"
                                                     for="parent_commodity_id">{{ __('Komoditas') }}</label>
                                                 <select class="select2 form-select" name="parent_commodity_id"

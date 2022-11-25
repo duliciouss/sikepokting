@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommodityController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\PriceController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,9 +31,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('export', [PriceController::class, 'export'])->name('prices.export');
     });
 
-    Route::get('/users', function () {
-        return view('users.index');
-    })->name('users.index');
+    Route::resource('users', UserController::class)->except('show');
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('json', [UserController::class, 'json'])->name('prices.json');
+    });
 });
 
 
