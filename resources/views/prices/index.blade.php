@@ -92,7 +92,7 @@
     </div>
     <div class="content-body">
         <div class="row">
-            <div class="col-md-4 col-12">
+            <div class="col-md-4 col-12 {{ auth()->user()->role === 3 ? 'd-none' : '' }}">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -173,7 +173,7 @@
             </div>
 
             <!-- Basic table -->
-            <div class="col-md-8 col-12">
+            <div class="col-md-{{ auth()->user()->role === 3 ? '12' : '8' }} col-12">
                 <div class="card">
                     <table class="table text-nowrap" id="datatable-price">
                         <thead>
@@ -182,7 +182,7 @@
                                 <th>{{ __('Pasar') }}</th>
                                 <th>{{ __('Komoditas') }}</th>
                                 <th>{{ __('Harga') }}</th>
-                                <th>{{ __('Aksi') }}</th>
+                                <th>{{ auth()->user()->role === 3 ? '' : 'Aksi' }}</th>
                             </tr>
                         </thead>
                     </table>

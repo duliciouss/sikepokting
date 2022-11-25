@@ -50,7 +50,7 @@
         <div class="col-md-4 col-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-end">
-                    <h4>Top 3 Harga Naik</h4>
+                    <h4>Top 3 Harga Turun</h4>
                 </div>
                 <div class="card-body">
                     <div id="session-chart2" class="my-1"></div>

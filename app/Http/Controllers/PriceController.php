@@ -33,7 +33,12 @@ class PriceController extends Controller
             if ($data->status !== 0) {
                 $isDisabled = 'disabled';
             }
-            return '<button type="button" class="btn btn-sm btn-warning btn-edit" id="btn-edit" data-url="prices/' . $data->id . '" data-method="PUT" data-id="' . $data->id . '" ' . $isDisabled . '> Edit</button> <button type="button" class="btn btn-sm btn-danger btn-delete" id="btn-delete" data-id="' . $data->id . '" ' . $isDisabled . '> Hapus</button>';
+            $monitoring = '';
+            if (auth()->user()->role === 3) {
+                $monitoring = 'd-none';
+            }
+
+            return '<button type="button" class="btn btn-sm btn-warning btn-edit ' . $monitoring . '" id="btn-edit" data-url="prices/' . $data->id . '" data-method="PUT" data-id="' . $data->id . '" ' . $isDisabled . '> Edit</button> <button type="button" class="btn btn-sm btn-danger btn-delete ' . $monitoring . '" id="btn-delete" data-id="' . $data->id . '" ' . $isDisabled . '> Hapus</button>';
         })->rawColumns(['aksi'])->editColumn('date', function ($data) {
             $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $data->date)->format('d F Y');
             return $formatedDate;

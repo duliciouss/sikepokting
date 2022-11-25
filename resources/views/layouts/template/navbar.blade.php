@@ -23,7 +23,8 @@
                     <div class="user-nav d-sm-flex d-none">
                         <span class="user-name fw-bolder">{{ auth()->user()->name }}</span>
                         <span
-                            class="user-status">{{ auth()->user()->role == 1 ? 'Superadmin' : 'Admin | ' . auth()->user()->market->name }}
+                            class="user-status">{{ auth()->user()->role == 1 ? 'Superadmin' : (auth()->user()->role == 2 ? 'Admin' : 'Monitoring') }}
+                            {{ auth()->user()->role == 2 ? auth()->user()->market->name ?? '' : '' }}
                         </span>
                     </div>
                     <span class="avatar">
