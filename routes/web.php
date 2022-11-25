@@ -17,8 +17,10 @@ Route::group(['middleware' => 'auth'], function () {
         return view('markets.index');
     })->name('markets.index');
 
-    Route::get('/commodities', [CommodityController::class, 'index'])->name('commodities.index');
-    Route::get('/commodities/{commodity}', [CommodityController::class, 'show'])->name('commodities.show');
+    Route::resource('commodities', CommodityController::class)->except('show');
+    Route::group(['prefix' => 'commodities'], function () {
+        Route::get('json', [CommodityController::class, 'json'])->name('prices.json');
+    });
 
     Route::resource('prices', PriceController::class)->except('show');
     Route::group(['prefix' => 'prices'], function () {
