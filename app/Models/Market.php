@@ -13,4 +13,9 @@ class Market extends Model
     public $incrementing = false;
     protected $keyType = 'uuid';
     protected $guarded = [];
+
+    public function unor()
+    {
+        return $this->belongsTo(Unor::class, 'unor_id', 'id');
+    }
 }

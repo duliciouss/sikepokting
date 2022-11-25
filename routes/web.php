@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommodityController;
+use App\Http\Controllers\MarketController;
 use App\Http\Controllers\PriceController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,9 +14,10 @@ Route::group(['middleware' => 'auth'], function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/markets', function () {
-        return view('markets.index');
-    })->name('markets.index');
+    Route::resource('markets', MarketController::class)->except('show');
+    Route::group(['prefix' => 'markets'], function () {
+        Route::get('json', [MarketController::class, 'json'])->name('prices.json');
+    });
 
     Route::resource('commodities', CommodityController::class)->except('show');
     Route::group(['prefix' => 'commodities'], function () {
