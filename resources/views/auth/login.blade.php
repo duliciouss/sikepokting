@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html lang="en" class="light-style customizer-hide" dir="ltr" data-theme="theme-default"
-    data-assets-path="{{ asset('template/') . '/' }}" data-template="horizontal-menu-template">
+    data-assets-path="{{ asset('template/') . '/' }}" data-template="vertical-menu-template">
 
 <head>
     <meta name="viewport"
@@ -70,7 +70,7 @@
                     <div class="card-body">
                         <!-- Logo -->
                         <div class="app-brand justify-content-center">
-                            <img src="{{ asset('assets/images/logo-sikepokting.png') }}" width="160px" alt="logo">
+                            <img src="{{ asset('assets/images/logo-notext.png') }}" width="160px" alt="logo">
                         </div>
                         <!-- /Logo -->
                         <h4 class="mb-1 pt-2">Selamat Datang!</h4>

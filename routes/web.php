@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommodityController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\PriceController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'users'], function () {
         Route::get('json', [UserController::class, 'json'])->name('prices.json');
     });
+
+    Route::resource('stocks', StockController::class)->except('show');
 });
 
 
