@@ -3,7 +3,7 @@
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item me-auto"><a class="navbar-brand" href="{{ route('dashboard') }}">
                     <span class="brand-logo">
-                        <img src="{{ asset('assets/images/logo-sikepokting.png') }}" alt="logo">
+                        <img src="{{ asset('assets/images/logo-notext.png') }}" alt="logo">
                     </span>
                     <h2 class="brand-text">{{ config('app.name', 'Laravel') }}</h2>
                 </a></li>
@@ -30,10 +30,12 @@
                         data-i18n="Home">Harga</span>
                 </a>
             </li>
+            <li class="nav-item {{ request()->is('stocks') ? 'active' : '' }}">
+                <a class="d-flex align-items-center" href="{{ route('stocks.index') }}">
+                    <i data-feather='box'></i><span class="menu-title text-truncate" data-i18n="Home">Persediaan</span>
+                </a>
+            </li>
             @if (auth()->user()->role === 1)
-                <li class="navigation-header"><span data-i18n="Apps &amp; Pages">Data Master</span><i
-                        data-feather="more-horizontal"></i>
-                </li>
                 <li class="nav-item {{ request()->is('commodities') ? 'active' : '' }}">
                     <a class="d-flex align-items-center" href="{{ route('commodities.index') }}">
                         <i data-feather="tag"></i><span class="menu-title text-truncate"

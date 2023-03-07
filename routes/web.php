@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommodityController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\StockController;
@@ -12,9 +13,10 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::group(['prefix' => 'dashboard'], function () {
+        Route::get('index', [DashboardController::class, 'index'])->name('dashboard.index');
+        Route::get('fullscreen', [DashboardController::class, 'fullscreen'])->name('dashboard.fullscreen');
+    });
 
     Route::resource('markets', MarketController::class)->except('show');
     Route::group(['prefix' => 'markets'], function () {
