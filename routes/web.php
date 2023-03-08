@@ -14,7 +14,7 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'dashboard'], function () {
-        Route::get('index', [DashboardController::class, 'index'])->name('dashboard.index');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('fullscreen', [DashboardController::class, 'fullscreen'])->name('dashboard.fullscreen');
     });
 

@@ -43,6 +43,8 @@
     @section('vendorCss')
         <link rel="stylesheet" href="{{ asset('template/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
         <link rel="stylesheet" href="{{ asset('template/vendor/libs/node-waves/node-waves.css') }}" />
+        <link rel="stylesheet" href="{{ asset('template/vendor/libs/select2/select2.css') }}" />
+        <link rel="stylesheet" href="{{ asset('template/vendor/libs/flatpickr/flatpickr.css') }}" />
     @show
 
     <!-- Page CSS -->
@@ -85,7 +87,7 @@
                             <div class="col-lg-8 mb-4 col-md-12">
                                 <div class="card">
                                     <div class="card-header d-flex justify-content-between">
-                                        <h5 class="card-title mb-0">Statistics</h5>
+                                        <h5 class="card-title mb-0">Statistik</h5>
                                         <small class="text-muted">Updated 1 month ago</small>
                                     </div>
                                     <div class="card-body pt-2">
@@ -93,44 +95,44 @@
                                             <div class="col-md-3 col-6">
                                                 <div class="d-flex align-items-center">
                                                     <div class="badge rounded-pill bg-label-primary me-3 p-2">
-                                                        <i class="ti ti-chart-pie-2 ti-sm"></i>
+                                                        <i class="ti ti-leaf ti-sm"></i>
                                                     </div>
                                                     <div class="card-info">
-                                                        <h5 class="mb-0">230k</h5>
-                                                        <small>Sales</small>
+                                                        <h5 class="mb-0">{{ $commodities->count() }}</h5>
+                                                        <small>Komoditas</small>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 col-6">
                                                 <div class="d-flex align-items-center">
                                                     <div class="badge rounded-pill bg-label-info me-3 p-2">
-                                                        <i class="ti ti-users ti-sm"></i>
+                                                        <i class="ti ti-building-store ti-sm"></i>
                                                     </div>
                                                     <div class="card-info">
-                                                        <h5 class="mb-0">8.549k</h5>
-                                                        <small>Customers</small>
+                                                        <h5 class="mb-0">{{ $markets->count() }}</h5>
+                                                        <small>Pasar</small>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 col-6">
                                                 <div class="d-flex align-items-center">
                                                     <div class="badge rounded-pill bg-label-danger me-3 p-2">
-                                                        <i class="ti ti-shopping-cart ti-sm"></i>
+                                                        <i class="ti ti-user-check ti-sm"></i>
                                                     </div>
                                                     <div class="card-info">
-                                                        <h5 class="mb-0">1.423k</h5>
-                                                        <small>Products</small>
+                                                        <h5 class="mb-0">{{ $markets->count() }}</h5>
+                                                        <small>Admin Pasar</small>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 col-6">
                                                 <div class="d-flex align-items-center">
                                                     <div class="badge rounded-pill bg-label-success me-3 p-2">
-                                                        <i class="ti ti-currency-dollar ti-sm"></i>
+                                                        <i class="ti ti-users ti-sm"></i>
                                                     </div>
                                                     <div class="card-info">
-                                                        <h5 class="mb-0">$9745</h5>
-                                                        <small>Revenue</small>
+                                                        <h5 class="mb-0">12</h5>
+                                                        <small>Pengguna</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -168,14 +170,52 @@
                         <div class="col-lg-12 mb-4 col-md-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingInput"
-                                            placeholder="John Doe" aria-describedby="floatingInputHelp" />
-                                        <label for="floatingInput">Name</label>
-                                        <div id="floatingInputHelp" class="form-text">
-                                            We'll never share your details with anyone else.
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="market" class="form-label">Pasar</label>
+                                            <select id="market" class="select2 form-select">
+                                                @foreach ($markets as $market)
+                                                    <option value="{{ $market->id }}">{{ $market->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="commodity" class="form-label">Komoditas</label>
+                                            <select id="commodity" class="select2 form-select">
+                                                @foreach ($commodities as $commodity)
+                                                    <option value="{{ $commodity->id }}">{{ $commodity->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="date" class="form-label">Tanggal</label>
+                                            <input type="date" name="date" id="date"
+                                                class="form-control flatpickr-basic"
+                                                value="{{ now()->format('d-m-Y') }}">
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 mb-4 col-md-12">
+                            <div class="card">
+                                <div class="card-header header-elements">
+                                    <div>
+                                        <h5 class="card-title mb-0">Statistics</h5>
+                                        <small class="text-muted">Commercial networks and enterprises</small>
+                                    </div>
+                                    <div class="card-header-elements ms-auto py-0">
+                                        <h5 class="fw-bold mb-0 me-3">$ 78,000</h5>
+                                        <span class="badge bg-label-secondary">
+                                            <i class='ti ti-arrow-up ti-xs text-success'></i>
+                                            <span class="align-middle">37%</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-2">
+                                    <canvas id="lineChart" class="chartjs" data-height="500"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -196,12 +236,15 @@
                                             @foreach ($commodities as $commodity)
                                                 <tr>
                                                     <td>
-                                                        <i class="ti ti-brand-angular ti-lg text-danger me-3"></i>
+                                                        {{-- <i class="ti ti-leaf ti-lg text-info me-3"></i> --}}
+                                                        <div class="badge rounded-pill bg-label-success me-3 p-2">
+                                                            <i class="ti ti-leaf ti-sm text-info"></i>
+                                                        </div>
                                                         <strong>{{ $commodity->name }}</strong>
                                                     </td>
                                                     <td>Rp. 13.000,-</td>
                                                     <td>Rp. 13.000,- </td>
-                                                    <td><span class="badge bg-label-primary me-1">-</span></td>
+                                                    <td>Rp. 0,- </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -257,6 +300,9 @@
 
     <!-- Vendors JS -->
     @section('vendorJs')
+        <script src="{{ asset('template/vendor/libs/select2/select2.js') }}"></script>
+        <script src="{{ asset('template/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+        <script src="{{ asset('template/vendor/libs/chartjs/chartjs.js') }}"></script>
     @show
 
     <!-- Main JS -->
@@ -264,6 +310,136 @@
 
     <!-- Page JS -->
     @section('pageJs')
+        <script>
+            $(".select2").select2();
+            $('.flatpickr-basic').flatpickr({
+                dateFormat: 'd-m-Y',
+            });
+
+            // Color Variables
+            const yellowColor = '#ffe800'
+            5
+            let borderColor, gridColor, tickColor;
+            if (isDarkStyle) {
+                borderColor = 'rgba(100, 100, 100, 1)';
+                gridColor = 'rgba(100, 100, 100, 1)';
+                tickColor = 'rgba(255, 255, 255, 0.75)'; // x & y axis tick color
+            } else {
+                borderColor = '#f0f0f0';
+                gridColor = '#f0f0f0';
+                tickColor = 'rgba(0, 0, 0, 0.75)'; // x & y axis tick color
+            }
+            const lineChart = document.getElementById('lineChart');
+            if (lineChart) {
+                const lineChartVar = new Chart(lineChart, {
+                    type: 'line',
+                    data: {
+                        labels: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140],
+                        datasets: [{
+                                data: [80, 150, 180, 270, 210, 160, 160, 202, 265, 210, 270, 255, 290, 360, 375],
+                                label: 'Europe',
+                                borderColor: config.colors.danger,
+                                tension: 0.5,
+                                pointStyle: 'circle',
+                                backgroundColor: config.colors.danger,
+                                fill: false,
+                                pointRadius: 1,
+                                pointHoverRadius: 5,
+                                pointHoverBorderWidth: 5,
+                                pointBorderColor: 'transparent',
+                                pointHoverBorderColor: cardColor,
+                                pointHoverBackgroundColor: config.colors.danger
+                            },
+                            {
+                                data: [80, 125, 105, 130, 215, 195, 140, 160, 230, 300, 220, 170, 210, 200, 280],
+                                label: 'Asia',
+                                borderColor: config.colors.primary,
+                                tension: 0.5,
+                                pointStyle: 'circle',
+                                backgroundColor: config.colors.primary,
+                                fill: false,
+                                pointRadius: 1,
+                                pointHoverRadius: 5,
+                                pointHoverBorderWidth: 5,
+                                pointBorderColor: 'transparent',
+                                pointHoverBorderColor: cardColor,
+                                pointHoverBackgroundColor: config.colors.primary
+                            },
+                            {
+                                data: [80, 99, 82, 90, 115, 115, 74, 75, 130, 155, 125, 90, 140, 130, 180],
+                                label: 'Africa',
+                                borderColor: yellowColor,
+                                tension: 0.5,
+                                pointStyle: 'circle',
+                                backgroundColor: yellowColor,
+                                fill: false,
+                                pointRadius: 1,
+                                pointHoverRadius: 5,
+                                pointHoverBorderWidth: 5,
+                                pointBorderColor: 'transparent',
+                                pointHoverBorderColor: cardColor,
+                                pointHoverBackgroundColor: yellowColor
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: borderColor,
+                                    drawBorder: false,
+                                    borderColor: borderColor
+                                },
+                                ticks: {
+                                    color: labelColor
+                                }
+                            },
+                            y: {
+                                scaleLabel: {
+                                    display: true
+                                },
+                                min: 0,
+                                max: 400,
+                                ticks: {
+                                    color: labelColor,
+                                    stepSize: 100
+                                },
+                                grid: {
+                                    color: borderColor,
+                                    drawBorder: false,
+                                    borderColor: borderColor
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                // Updated default tooltip UI
+                                rtl: isRtl,
+                                backgroundColor: cardColor,
+                                titleColor: headingColor,
+                                bodyColor: legendColor,
+                                borderWidth: 1,
+                                borderColor: borderColor
+                            },
+                            legend: {
+                                position: 'top',
+                                align: 'start',
+                                rtl: isRtl,
+                                labels: {
+                                    usePointStyle: true,
+                                    padding: 35,
+                                    boxWidth: 6,
+                                    boxHeight: 6,
+                                    color: legendColor
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        </script>
     @show
 </body>
 
