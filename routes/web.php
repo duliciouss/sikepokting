@@ -34,12 +34,20 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('export', [PriceController::class, 'export'])->name('prices.export');
     });
 
+    Route::resource('prices', PriceController::class)->except('show');
+    Route::group(['prefix' => 'prices'], function () {
+        Route::get('json', [PriceController::class, 'json'])->name('prices.json');
+    });
+
     Route::resource('users', UserController::class)->except('show');
     Route::group(['prefix' => 'users'], function () {
         Route::get('json', [UserController::class, 'json'])->name('prices.json');
     });
 
     Route::resource('stocks', StockController::class)->except('show');
+    Route::group(['prefix' => 'stocks'], function () {
+        Route::get('json', [StockController::class, 'json'])->name('stocks.json');
+    });
 });
 
 

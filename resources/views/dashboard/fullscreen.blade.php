@@ -88,7 +88,7 @@
                                 <div class="card">
                                     <div class="card-header d-flex justify-content-between">
                                         <h5 class="card-title mb-0">Statistik</h5>
-                                        <small class="text-muted">Updated 1 month ago</small>
+                                        <small class="text-muted">Terakhir update: 1 menit yang lalu</small>
                                     </div>
                                     <div class="card-body pt-2">
                                         <div class="row gy-3">
@@ -140,28 +140,28 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Orders -->
-                            <div class="col-lg-2 col-6 mb-4">
-                                <div class="card">
-                                    <div class="card-body text-center">
-                                        <div class="badge rounded-pill p-2 bg-label-danger mb-2">
-                                            <i class="ti ti-briefcase ti-sm"></i>
-                                        </div>
-                                        <h5 class="card-title mb-2">97.8k</h5>
-                                        <small>Orders</small>
-                                    </div>
-                                </div>
-                            </div>
-
                             <!-- Reviews -->
                             <div class="col-lg-2 col-6 mb-4">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <div class="badge rounded-pill p-2 bg-label-success mb-2">
-                                            <i class="ti ti-message-dots ti-sm"></i>
+                                        <div class="badge rounded-pill p-2 bg-label-primary mb-2">
+                                            <i class="ti ti-coin ti-sm"></i>
                                         </div>
-                                        <h5 class="card-title mb-2">3.4k</h5>
-                                        <small>Review</small>
+                                        <h5 class="card-title mb-2">0</h5>
+                                        <small>Harga hari ini</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Orders -->
+                            <div class="col-lg-2 col-6 mb-4">
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <div class="badge rounded-pill p-2 bg-label-success mb-2">
+                                            <i class="ti ti-file-download ti-sm"></i>
+                                        </div>
+                                        <h5 class="card-title mb-2">Download</h5>
+                                        <small>Data harga</small>
                                     </div>
                                 </div>
                             </div>
