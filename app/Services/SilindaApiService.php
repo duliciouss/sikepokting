@@ -21,7 +21,7 @@ class SilindaApiService
     public function getToken()
     {
         Log::info($this->SILINDA_SCOPE);
-        $response = Http::timeout(3)->asForm()->post('/oauth2/token', [
+        $response = Http::timeout(3)->asForm()->post($this->SILINDA_TOKEN_URL . '/oauth2/token', [
             'grant_type' => 'client_credentials',
             'scope' => $this->SILINDA_SCOPE,
         ])->withHeaders([
