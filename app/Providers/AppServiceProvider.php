@@ -27,5 +27,9 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('date', function ($expression) {
             return "<?php echo \Carbon\Carbon::parse($expression)->translatedFormat('d-m-Y'); ?>";
         });
+
+        Blade::directive('money', function ($expression) {
+            return "<?php echo number_format($expression, 2); ?>";
+        });
     }
 }

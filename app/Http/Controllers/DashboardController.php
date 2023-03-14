@@ -11,11 +11,8 @@ class DashboardController extends Controller
     public function index()
     {
         $commodities = Commodity::with('uom')->where('type', 'DETAIL')->oldest('name')->get();
-
-        return view('dashboard.default', compact('commodities'));
-        $commodities = Commodity::with('uom')->where('type', 'DETAIL')->oldest('name')->get();
         $markets = Market::oldest('name')->get();
-        return view('dashboard.fullscreen', compact('commodities', 'markets'));
+        return view('dashboard.default', compact('commodities', 'markets'));
     }
 
     public function fullscreen()

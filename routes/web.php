@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\TestApiController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,6 +49,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'stocks'], function () {
         Route::get('json', [StockController::class, 'json'])->name('stocks.json');
     });
+
+    Route::get('/get-token', [TestApiController::class, 'index']);
 });
 
 

@@ -16,33 +16,30 @@ class StockController extends Controller
 {
     public function index()
     {
-        $prices = Stock::all();
+        $stocks = Stock::all();
         $markets = Market::oldest('name')->get();
         $commodities = Commodity::with('uom')->where('type', 'DETAIL')->oldest('name')->get();
-        return view('stocks.index', compact('prices', 'markets', 'commodities'));
+        return view('stocks.index', compact('stocks', 'markets', 'commodities'));
     }
 
     public function json()
     {
-        $prices = Stock::with(['market', 'commodity'])->get();
+        $stocks = Stock::with(['market', 'commodity'])->get();
 
-        return DataTables::of($prices)->addColumn('aksi', function ($data) {
+        return DataTables::of($stocks)->addColumn('aksi', function ($data) {
             $isDisabled = '';
-            if ($data->status !== 0) {
-                $isDisabled = 'disabled';
-            }
             $monitoring = '';
             if (auth()->user()->role === 3) {
                 $monitoring = 'd-none';
             }
 
-            return '<button type="button" class="btn btn-sm btn-warning btn-edit ' . $monitoring . '" id="btn-edit" data-url="prices/' . $data->id . '" data-method="PUT" data-id="' . $data->id . '" ' . $isDisabled . '> Edit</button> <button type="button" class="btn btn-sm btn-danger btn-delete ' . $monitoring . '" id="btn-delete" data-id="' . $data->id . '" ' . $isDisabled . '> Hapus</button>';
+            return '<button type="button" class="btn btn-icon btn-outline-warning btn-sm btn-edit ' . $monitoring . '" id="btn-edit" data-url="prices/' . $data->id . '" data-method="PUT" data-id="' . $data->id . '"> <i class="ti ti-edit"> </i> </button> <button type="button" class="btn btn-icon btn-outline-danger btn-sm btn-delete ' . $monitoring . '" id="btn-delete" data-id="' . $data->id . '"> <i class="ti ti-trash"> </i></button>';
         })->rawColumns(['aksi'])->editColumn('date', function ($data) {
             $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $data->date)->format('d F Y');
             return $formatedDate;
-        })->editColumn('price', function ($data) {
-            return $data->price . ' per ' . $data->uom;
-        })->toJson();
+        })->editColumn('stock', function ($data) {
+            return number_format($data->stock);
+        })->addIndexColumn()->toJson();
     }
 
     public function store(Request $request)
