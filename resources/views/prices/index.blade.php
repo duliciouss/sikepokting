@@ -26,13 +26,13 @@
                         <form class="form-stock" action="{{ route('prices.store') }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label class="form-label" for="date">Bulan</label><br>
+                                <label class="form-label" for="date">Tanggal</label><br>
                                 <input type="text" class="form-control flatpickr-basic" id="date" name="date"
                                     placeholder="Masukan bulan" value="{{ now()->format('d-m-Y') }}" />
                             </div>
                             <div class="mb-3 {{ auth()->user()->market_id === null ? '' : 'd-none' }}">
                                 <label class="form-label" for="market_id">Pasar</label>
-                                <select id="market_id" class="select2 form-select" name="market_id" data-allow-clear="true">
+                                <select id="market_id" class="select2 form-select" name="market_id">
                                     @foreach ($markets as $market)
                                         <option value="{{ $market->id }}">{{ $market->name }}</option>
                                     @endforeach
@@ -40,8 +40,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="commodity_id">Komoditas</label>
-                                <select id="commodity_id" class="select2 form-select" name="commodity_id"
-                                    data-allow-clear="true">
+                                <select id="commodity_id" class="select2 form-select" name="commodity_id">
                                     @foreach ($commodities as $commodity)
                                         <option value="{{ $commodity->id }}">{{ $commodity->name }}</option>
                                     @endforeach

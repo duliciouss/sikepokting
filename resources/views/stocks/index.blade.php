@@ -32,7 +32,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="market_id">Pasar</label>
-                                <select id="market_id" class="select2 form-select" name="market_id" data-allow-clear="true">
+                                <select id="market_id" class="select2 form-select" name="market_id">
                                     @foreach ($markets as $market)
                                         <option value="{{ $market->id }}">{{ $market->name }}</option>
                                     @endforeach
@@ -40,8 +40,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="commodity_id">Komoditas</label>
-                                <select id="commodity_id" class="select2 form-select" name="commodity_id"
-                                    data-allow-clear="true">
+                                <select id="commodity_id" class="select2 form-select" name="commodity_id">
                                     @foreach ($commodities as $commodity)
                                         <option value="{{ $commodity->id }}">{{ $commodity->name }}</option>
                                     @endforeach

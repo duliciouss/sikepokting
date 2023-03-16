@@ -24,11 +24,11 @@ class CommodityController extends Controller
         $commodities = Commodity::with(['parent', 'uom'])->where('type', 'DETAIL')->get();
 
         return DataTables::of($commodities)->addColumn('aksi', function ($data) {
-            return '<button type="button" class="btn btn-sm btn-warning btn-edit" id="btn-edit" data-url="commodities/' . $data->id . '" data-method="PUT" data-id="' . $data->id . '"> Edit</button> <button type="button" class="btn btn-sm btn-danger btn-delete" id="btn-delete" data-id="' . $data->id .  '"> Hapus</button>';
+            return '<button type="button" class="btn btn-icon btn-outline-warning btn-sm btn-edit" id="btn-edit" data-url="commodities/' . $data->id . '" data-method="PUT" data-id="' . $data->id . '"> <i class="ti ti-edit"> </i> </button> <button type="button" class="btn btn-icon btn-outline-danger btn-sm btn-delete" id="btn-delete" data-id="' . $data->id .  '"> <i class="ti ti-trash"> </i> </button>';
         })->rawColumns(['aksi'])->editColumn('date', function ($data) {
             $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $data->created_at)->format('d F Y');
             return $formatedDate;
-        })->toJson();
+        })->addIndexColumn()->toJson();
     }
 
     public function store(CommodityStoreRequest $request)

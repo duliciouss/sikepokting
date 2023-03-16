@@ -1,330 +1,251 @@
-<x-template.app-layout>
-    <x-slot name="title">{{ __('Pasar') }}</x-slot>
+@extends('layouts.app')
 
-    <x-slot name="vendorCss">
-        <link rel="stylesheet" type="text/css"
-            href="{{ asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css') }}">
-        <link rel="stylesheet" type="text/css"
-            href="{{ asset('app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css') }}">
-        <link rel="stylesheet" type="text/css"
-            href="{{ asset('app-assets/vendors/css/tables/datatable/buttons.bootstrap5.min.css') }}">
-        <link rel="stylesheet" type="text/css"
-            href="{{ asset('app-assets/vendors/css/tables/datatable/rowGroup.bootstrap4.min.css') }}">
-        <link rel="stylesheet" type="text/css"
-            href="{{ asset('app-assets/vendors/css/forms/select/select2.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/toastr.min.css') }}">
-        <link rel="stylesheet" type="text/css"
-            href="{{ asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
-        <link rel="stylesheet" type="text/css"
-            href="{{ asset('app-assets/vendors/css/extensions/sweetalert2.min.css') }}">
-    </x-slot>
+@section('title', 'Pasar')
 
-    <x-slot name="pageCss">
-        <link rel="stylesheet" type="text/css"
-            href="{{ asset('app-assets/css/plugins/extensions/ext-component-toastr.css') }}">
-        <link rel="stylesheet" type="text/css"
-            href="{{ asset('app-assets/css/plugins/extensions/ext-component-sweet-alerts.css') }}">
-        <link rel="stylesheet" type="text/css"
-            href="{{ asset('app-assets/css/plugins/forms/pickers/form-flat-pickr.css') }}">
-    </x-slot>
+@section('vendorCss')
+    @parent
+    <link rel="stylesheet" href="{{ asset('template/vendor/libs/animate-css/animate.css') }}" />
+    <link rel="stylesheet" href="{{ asset('template/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" />
+    <link rel="stylesheet" href="{{ asset('template/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('template/vendor/libs/select2/select2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('template/vendor/libs/flatpickr/flatpickr.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
+@endsection
 
-    <div class="content-header row">
-        <div class="content-header-left col-12 mb-2">
-            <div class="row breadcrumbs-top flex-fill">
-                <div class="col-12">
-                    <h2 class="content-header-title float-start mb-0">{{ __('Pasar') }}</h2>
-                    <div class="breadcrumb-wrapper">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
-                            </li>
-                            <li class="breadcrumb-item active">{{ __('Pasar') }}
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="content-body">
+@section('content')
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4">Pasar</h4>
         <div class="row">
-            <div class="col-md-4 col-12">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header border-bottom">
-                                <h4 class="card-title form-title">{{ __('Form Tambah Pasar') }}</h4>
+            <div class="col-md-6 col-xl-6">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Form Tambah Pasar</h5>
+                        <small class="text-muted float-end">Default label</small>
+                    </div>
+                    <div class="card-body">
+                        <form class="form-stock" action="{{ route('markets.store') }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label class="form-label" for="unor">Unit Kerja</label>
+                                <select id="unor" class="select2 form-select" name="unor">
+                                    @foreach ($unor as $unor)
+                                        <option value="{{ $unor->id }}">{{ $unor->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="card-body">
-                                <form class="form form-vertical form-commodity" action="{{ route('markets.store') }}"
-                                    method="POST">
-                                    @csrf
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="my-1">
-                                                <label class="form-label" for="unor_id">{{ __('Unit Kerja') }}</label>
-                                                <select class="select2 form-select" name="unor_id" id="unor-id">
-                                                    <option value="" selected disabled>
-                                                        {{ __('Pilih Unit Kerja ...') }}
-                                                    </option>
-                                                    @foreach ($unor as $item)
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="unor_id_error text-danger"></span>
-                                            </div>
-
-                                            <div class="mb-1">
-                                                <label class="form-label" for="name">{{ __('Nama Pasar') }}</label>
-
-                                                <input type="text" class="form-control" name="name"
-                                                    id="name">
-                                                <span class="name_error text-danger"></span>
-                                            </div>
-                                            <div class="mb-1">
-                                                <label class="form-label" for="address">{{ __('Alamat') }}</label>
-
-                                                <input type="text" class="form-control" name="address"
-                                                    id="address">
-                                                <span class="address_error text-danger"></span>
-                                            </div>
-                                            <div class="d-flex justify-content-between">
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i data-feather='save'></i> {{ __('Simpan') }}
-                                                </button>
-                                                <button type="button" class="btn btn-secondary btn-cencel d-none">
-                                                    <i data-feather='x-square'></i> {{ __('Batal') }}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                            <div class="mb-3">
+                                <label class="form-label" for="name">Nama Pasar</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Masukan nama pasar" autofocus />
                             </div>
-                        </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="address">Alamat</label>
+                                <input type="text" class="form-control" id="address" name="address"
+                                    placeholder="Masukan nama pasar" autofocus />
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="menu-icon tf-icons ti ti-device-floppy"></i> Simpan
+                            </button>
+                        </form>
                     </div>
                 </div>
-
             </div>
-
-            <!-- Basic table -->
-            <div class="col-md-8 col-12">
+            <div class="col-md-6 col-xl-6">
+                <!-- DataTable -->
                 <div class="card">
-                    <table class="table" id="datatable-markets">
-                        <thead>
-                            <tr>
-                                <th>{{ __('Nama Pasar') }}</th>
-                                <th>{{ __('Unit Kerja') }}</th>
-                                <th>{{ __('Alamat') }}</th>
-                                <th>{{ __('Aksi') }}</th>
-                            </tr>
-                        </thead>
-                    </table>
+                    <div class="card-datatable table-responsive pt-0">
+                        <table class="datatables-basic table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Unit Kerja</th>
+                                    <th>Nama Pasar</th>
+                                    <th>Alamat</th>
+                                    <th> <i class="menu-icon tf-icons ti ti-settings"></i> </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <!--/ Basic table -->
         </div>
     </div>
+@endsection
 
-    <x-slot name="pageVendorJs">
-        <script src="{{ asset('assets/js/jquery-dateformat.min.js') }}"></script>
-        <script src="{{ asset('app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('app-assets/vendors/js/tables/datatable/dataTables.bootstrap5.min.js') }}"></script>
-        <script src="{{ asset('app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
-        <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
-        <script src="{{ asset('app-assets/vendors/js/extensions/toastr.min.js') }}"></script>
-        <script src="{{ asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
-    </x-slot>
+@section('vendorJs')
+    @parent
+    <script src="{{ asset('template/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+    <script src="{{ asset('template/vendor/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('template/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('template/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
+@endsection
 
-    <x-slot name="pageJs">
-        <script>
-            $(document).ready(function() {
-                // init
-                var table = $('#datatable-markets').DataTable({
-                    lengthMenu: [
-                        [10, 25, 50, -1],
-                        [10, 25, 50, "All"]
-                    ],
-                    serverSide: true,
-                    processing: true,
-                    responsive: true,
-                    ajax: {
-                        url: "/markets/json"
-                    },
-                    columns: [{
-                            data: 'name',
-                            name: 'name'
-                        },
-                        {
-                            data: 'unor.name',
-                            name: 'unor.name'
-                        },
-                        {
-                            data: 'address',
-                            name: 'address'
-                        },
-                        {
-                            data: 'aksi',
-                            name: 'aksi'
-                        }
-                    ],
-                    dom: '<"card-header border-bottom p-2"<"head-label"><"dt-action-buttons text-end"B>>' +
-                        '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' +
-                        't<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-                });
+@section('pageJs')
+    @parent
+    <script>
+        $(".select2").select2();
+        $('.flatpickr-basic').flatpickr({
+            dateFormat: 'd-m-Y',
+            altInput: true,
+            plugins: [new monthSelectPlugin({
+                shorthand: true,
+                dateFormat: "Y-m-d",
+                altFormat: "M Y"
+            })]
+        });
 
-                $('div.head-label').html('<h4 class="mb-0">Data Pasar</h4>');
-                $('.select2').select2();
-                $('.flatpickr-basic').flatpickr({
-                    dateFormat: 'd-m-Y'
-                });
-
-                function clearForm() {
-                    $('.form-title').text('Form Tambah Pasar');
-                    $('form').trigger('reset');
-                    $('.select2').val();
-                    $('.select2').select2().trigger('change');
-                    $('.btn-cencel').addClass('d-none');
-                    $('form').attr('method', 'POST');
-                    $('form').attr('action', '/markets');
+        var table = $('.datatables-basic').DataTable({
+            lengthMenu: [
+                [5, 10, 25, 50, -1],
+                [5, 10, 25, 50, "All"]
+            ],
+            serverSide: true,
+            processing: true,
+            // responsive: true,
+            ajax: {
+                url: "/markets/json"
+            },
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'unor.name',
+                    name: 'unor.name'
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'address',
+                    name: 'address',
+                    defaultContent: '-'
+                },
+                {
+                    data: 'aksi',
+                    name: 'aksi'
                 }
+            ]
+        });
 
-                function clearError() {
-                    console.log('clear error');
-                    $('span.text-danger').text('');
-                    $('input.is-invalid').removeClass('is-invalid');
-                    $('select.is-invalid').removeClass('is-invalid');
+        $('form.form-stock').on('submit', function(e) {
+            e.preventDefault();
+
+            const url = $(this).attr('action');
+            const method = $(this).attr('method');
+
+            $.ajax({
+                url,
+                type: method,
+                data: new FormData(this),
+                contentType: false,
+                processData: false,
+                success: function(result) {
+                    if (result.success) {
+                        // clearForm();
+                        // clearError();
+
+                        table.ajax.reload();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Data berhasil disimpan.',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            buttonsStyling: false
+                        });
+                    } else {
+                        // clearError();
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Telah terjadi kesalahan.',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            buttonsStyling: false
+                        });
+                    }
+                },
+                error: function(error) {
+                    if (error.responseJSON) {
+                        $.each(error.responseJSON.errors, function(prefix, val) {
+                            $('form#form-information').find('span.' + prefix + '_error').text(
+                                val[0]);
+                            $('input[name=' + prefix + ']').addClass('is-invalid');
+                            $('select[name=' + prefix + ']').addClass('is-invalid');
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Telah terjadi kesalahan.',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        });
+                    }
                 }
+            });
+        });
 
-                $('form.form-commodity').on('submit', function(e) {
-                    e.preventDefault();
-
-                    const url = $(this).attr('action');
-                    const method = $(this).attr('method');
-                    const data = $(this).serialize();
-
+        $(document).on('click', '.btn-delete', function(e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            console.log(id);
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: "Data yang sudah dihapus tidak akan kembali!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-danger ms-1'
+                },
+                buttonsStyling: false
+            }).then(function(result) {
+                if (result.value) {
                     $.ajax({
-                        url,
-                        type: method,
-                        data: data,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: '/markets/' + id,
+                        method: 'delete',
                         success: function(result) {
                             if (result.success) {
-                                clearForm();
-                                clearError();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Data berhasil dihapus.',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    buttonsStyling: false
+                                });
                                 table.ajax.reload();
-
-                                toastr.success(result.message, 'Sukses!', {
-                                    closeButton: true,
-                                    tapToDismiss: true,
-                                    progressBar: true
-                                });
                             } else {
-                                clearError();
-                                toastr.error(result.message, 'Error', {
-                                    closeButton: true,
-                                    tapToDismiss: true,
-                                    progressBar: true
-                                });
+                                toastr.error(result.message, 'Error');
                             }
                         },
                         error: function(error) {
-                            if (error.responseJSON.errors) {
-                                $.each(error.responseJSON.errors, function(prefix, val) {
-                                    $($('form')).find("span." + prefix + "_error").text(val[
-                                        0]);
-                                    $("input[name=" + prefix + "]").addClass('is-invalid');
-                                });
-                            } else {
-                                toastr.error(error.statusText, 'Error', {
-                                    closeButton: true,
-                                    tapToDismiss: true,
-                                    progressBar: true
-                                });
-                            }
-                        }
-                    });
-                });
-
-                // edit commodity
-                $(document).on('click', '.btn-edit', function() {
-                    clearForm();
-                    clearError();
-                    const id = $(this).attr('data-id');
-                    const method = $(this).attr('data-method');
-                    const url = $(this).attr('data-url');
-
-                    $.ajax({
-                        url: '/markets/' + id + '/edit',
-                        type: 'GET',
-                        success: function(result) {
-                            result = result.data;
-                            $('form').attr('method', method);
-                            $('form').attr('action', url);
-                            console.log(url);
-                            $('form select[name="unor_id"]').val(result.unor_id);
-                            $('form select[name="unor_id"]').select2().trigger(
-                                'change');
-                            $('form input[name="name"]').val(result.name);
-                            $('form input[name="name"]').focus();
-                            $('form input[name="address"]').val(result.address);
-                            $('form input[name="address"]').focus();
-                            $('.form-title').text('Form Ubah Pasar');
-                            $('.btn-cencel').removeClass('d-none');
-                        }
-                    });
-                });
-
-                // cencel edit
-                $(document).on('click', '.btn-cencel', function() {
-                    clearForm();
-                    clearError();
-                });
-
-                $(document).on('click', '.btn-delete', function(e) {
-                    e.preventDefault();
-                    let id = $(this).data('id');
-                    console.log(id);
-                    Swal.fire({
-                        title: 'Anda yakin?',
-                        text: "Data yang sudah dihapus tidak akan kembali!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'Ya, hapus!',
-                        cancelButtonText: 'Batal',
-                        customClass: {
-                            confirmButton: 'btn btn-primary',
-                            cancelButton: 'btn btn-outline-danger ms-1'
-                        },
-                        buttonsStyling: false
-                    }).then(function(result) {
-                        if (result.value) {
-                            $.ajax({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Telah terjadi kesalahan.',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
                                 },
-                                url: '/markets/' + id,
-                                method: 'delete',
-                                success: function(result) {
-                                    if (result.success) {
-                                        toastr.success(result.message, 'Sukses!', {
-                                            closeButton: true,
-                                            tapToDismiss: true,
-                                            progressBar: true
-                                        });
-                                        table.ajax.reload();
-                                        clearForm();
-                                        clearError();
-                                    } else {
-                                        toastr.error(result.message, 'Error');
-                                    }
-                                },
-                                error: function(error) {
-                                    toastr.error(error.statusText, 'Error');
-                                }
-                            })
+                                buttonsStyling: false
+                            });
                         }
-                    });
-                })
+                    })
+                }
             });
-        </script>
-    </x-slot>
-</x-template.app-layout>
+        });
+    </script>
+@endsection
