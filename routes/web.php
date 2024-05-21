@@ -4,6 +4,7 @@ use App\Http\Controllers\CommodityController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\PriceController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\TestApiController;
 use App\Http\Controllers\UserController;
@@ -17,6 +18,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'permission:dashboard'], function () {
         Route::group(['prefix' => 'dashboard'], function () {
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+            Route::post('/', [DashboardController::class, 'index'])->name('dashboard');
+            Route::get('/get-chart-data', [DashboardController::class, 'getChartData']);
             Route::get('fullscreen', [DashboardController::class, 'fullscreen'])->name('dashboard.fullscreen');
         });
     });
@@ -56,6 +59,9 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('json', [UserController::class, 'json'])->name('users.json');
         });
     });
+
+    Route::post('/profile', [ProfileController::class, 'store'])->name('profile.store');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 
     Route::get('/get-token', [TestApiController::class, 'index']);
 });

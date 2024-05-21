@@ -21,6 +21,7 @@ return new class extends Migration
             $table->dateTime('date');
             $table->uuid('created_by');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

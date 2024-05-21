@@ -18,7 +18,7 @@ class StockController extends Controller
     {
         $stocks = Stock::all();
         $markets = Market::oldest('name')->get();
-        $commodities = Commodity::with('uom')->where('type', 'DETAIL')->oldest('name')->get();
+        $commodities = Commodity::with('uom')->oldest('name')->get();
         return view('stocks.index', compact('stocks', 'markets', 'commodities'));
     }
 
@@ -26,20 +26,7 @@ class StockController extends Controller
     {
         $stocks = Stock::with(['market', 'commodity'])->get();
 
-        return DataTables::of($stocks)->addColumn('aksi', function ($data) {
-            $isDisabled = '';
-            $monitoring = '';
-            if (auth()->user()->role === 3) {
-                $monitoring = 'd-none';
-            }
-
-            return '<button type="button" class="btn btn-icon btn-outline-warning btn-sm btn-edit ' . $monitoring . '" id="btn-edit" data-url="prices/' . $data->id . '" data-method="PUT" data-id="' . $data->id . '"> <i class="ti ti-edit"> </i> </button> <button type="button" class="btn btn-icon btn-outline-danger btn-sm btn-delete ' . $monitoring . '" id="btn-delete" data-id="' . $data->id . '"> <i class="ti ti-trash"> </i></button>';
-        })->rawColumns(['aksi'])->editColumn('date', function ($data) {
-            $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $data->date)->format('d F Y');
-            return $formatedDate;
-        })->editColumn('stock', function ($data) {
-            return number_format($data->stock);
-        })->addIndexColumn()->toJson();
+        return DataTables::of($stocks)->addIndexColumn()->toJson();
     }
 
     public function store(Request $request)

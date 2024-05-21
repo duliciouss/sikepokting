@@ -14,7 +14,6 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4">Persediaan</h4>
         <div class="row">
             @can('create persediaan')
                 <div class="col-md-12 col-xl-12">
@@ -65,11 +64,11 @@
                     <!-- DataTable -->
                     <div class="card">
                         <div class="card-datatable table-responsive pt-0">
-                            <table class="datatables-basic table">
+                            <table id="table-stock" class="datatables-basic table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Tanggal</th>
+                                        <th>Bulan</th>
                                         <th>Pasar</th>
                                         <th>Komoditas</th>
                                         <th>Jumlah Persediaan</th>
@@ -91,7 +90,9 @@
     <script src="{{ asset('template/vendor/libs/select2/select2.js') }}"></script>
     <script src="{{ asset('template/vendor/libs/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ asset('template/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
 @endsection
 
 @section('pageJs')
@@ -100,11 +101,12 @@
         $(".select2").select2();
         $('.flatpickr-basic').flatpickr({
             dateFormat: 'd-m-Y',
+            locale: 'id',
             altInput: true,
             plugins: [new monthSelectPlugin({
-                shorthand: true,
+                shorthand: false,
                 dateFormat: "Y-m-d",
-                altFormat: "M Y"
+                altFormat: "F Y"
             })]
         });
 
@@ -127,7 +129,12 @@
                 },
                 {
                     data: 'date',
-                    name: 'date'
+                    name: 'date',
+                    render: function(data) {
+                        // Format tanggal menjadi 'd F Y'
+                        var formattedDate = moment(data).format('MMMM YYYY');
+                        return formattedDate;
+                    }
                 },
                 {
                     data: 'market.name',
@@ -144,13 +151,20 @@
                 },
                 {
                     data: 'aksi',
-                    name: 'aksi'
+                    name: 'aksi',
+                    render: function(data, type, row) {
+                        return deleteButton =
+                            `<button type="button" class="btn btn-icon btn-outline-danger btn-sm btn-delete" id="btn-delete" data-id="${row.id}"><i class="ti ti-trash"></i></button>`;
+                    }
                 }
             ]
         });
 
         $('form.form-stock').on('submit', function(e) {
             e.preventDefault();
+
+            const form = $(this); // Menyimpan referensi ke formulir dalam variabel form
+            const table = $('#table-stock').DataTable(); // Ganti 'table_id' dengan ID tabel Anda
 
             const url = $(this).attr('action');
             const method = $(this).attr('method');
@@ -163,9 +177,7 @@
                 processData: false,
                 success: function(result) {
                     if (result.success) {
-                        // clearForm();
-                        // clearError();
-
+                        form.trigger('reset').find('.is-invalid').removeClass('is-invalid');
                         table.ajax.reload();
                         Swal.fire({
                             icon: 'success',

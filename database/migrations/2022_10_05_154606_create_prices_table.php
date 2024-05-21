@@ -23,6 +23,7 @@ return new class extends Migration
             $table->uuid('created_by');
             $table->integer('status')->default(0)->comment('0: pending; 1: terkirim;');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('market_id')->references('id')->on('markets')->onDelete('restrict')->onUpdate('restrict');
             $table->foreign('commodity_id')->references('id')->on('commodities')->onDelete('restrict')->onUpdate('restrict');

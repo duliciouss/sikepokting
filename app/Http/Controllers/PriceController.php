@@ -19,33 +19,14 @@ class PriceController extends Controller
     {
         $prices = Price::all();
         $markets = Market::oldest('name')->get();
-        $commodities = Commodity::with('uom')->where('type', 'DETAIL')->oldest('name')->get();
+        $commodities = Commodity::with('uom')->oldest('name')->get();
         return view('prices.index', compact('prices', 'markets', 'commodities'));
     }
 
     public function json()
     {
         $prices = Price::with(['market', 'commodity'])->get();
-
-        return DataTables::of($prices)->addColumn('aksi', function ($data) {
-            $isDisabled = '';
-            if ($data->status !== 0) {
-                $isDisabled = 'disabled';
-            }
-            $monitoring = '';
-            if (auth()->user()->hasRole('monitoring')) {
-                $monitoring = 'd-none';
-            }
-
-            return '<button type="button" class="btn btn-icon btn-outline-warning btn-sm btn-edit ' . $monitoring . '" id="btn-edit" data-url="prices/' . $data->id . '" data-method="PUT" data-id="' . $data->id . '" ' . $isDisabled . '> <i class="ti ti-edit"> </i></button> <button type="button" class="btn btn-icon btn-outline-danger btn-sm btn-delete ' . $monitoring . '" id="btn-delete" data-id="' . $data->id . '" ' . $isDisabled . '> <i class="ti ti-trash"> </i> </button>';
-        })->rawColumns(['aksi'])->editColumn('date', function ($data) {
-            $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $data->date)->format('d F Y');
-            return $formatedDate;
-        })->editColumn('commodity.name', function ($data) {
-            return $data->commodity->name . ' (' . $data->uom . ')';
-        })->editColumn('price', function ($data) {
-            return 'Rp. ' . number_format($data->price);
-        })->addIndexColumn()->toJson();
+        return DataTables::of($prices)->addIndexColumn()->toJson();
     }
 
     public function store(PriceStoreRequest $request)

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('address');
             $table->integer('is_active')->comment('1: active; 2: nonactive');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('unor_id')->references('id')->on('unors')->onDelete('restrict')->onUpdate('restrict');
         });

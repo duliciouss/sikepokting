@@ -17,11 +17,11 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->uuid('uom_id')->nullable();
-            $table->enum('type', ['GENERAL', 'DETAIL']);
             $table->string('image_name');
             $table->text('image_path');
             $table->integer('order_report');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('uom_id')->references('id')->on('uoms')->onDelete('restrict')->onUpdate('restrict');
         });

@@ -18,7 +18,8 @@
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                        <img src="{{ asset('template/img/avatars/1.png') }}" alt class="h-auto rounded-circle" />
+                        <span
+                            class="avatar-initial rounded-circle bg-secondary">{{ Str::limit(auth()->user()->name, 1, '') }}</span>
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -27,15 +28,14 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ asset('template/img/avatars/1.png') }}" alt
-                                            class="h-auto rounded-circle" />
+                                        <span
+                                            class="avatar-initial rounded-circle bg-secondary">{{ Str::limit(auth()->user()->name, 1, '') }}</span>
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
                                     <span class="fw-semibold d-block">{{ auth()->user()->name }}</span>
                                     <small class="text-muted">
-                                        {{ auth()->user()->role == 1 ? 'Superadmin' : (auth()->user()->role == 2 ? 'Admin' : 'Monitoring') }}
-                                        {{ auth()->user()->role == 2 ? auth()->user()->market->name ?? '' : '' }}
+                                        {{ auth()->user()->roles->first()->name }}
                                     </small>
                                 </div>
                             </div>
@@ -45,15 +45,9 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{ route('profile.index') }}">
                             <i class="ti ti-user-check me-2 ti-sm"></i>
                             <span class="align-middle">Profil</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <i class="ti ti-settings me-2 ti-sm"></i>
-                            <span class="align-middle">Pengaturan</span>
                         </a>
                     </li>
                     <li>

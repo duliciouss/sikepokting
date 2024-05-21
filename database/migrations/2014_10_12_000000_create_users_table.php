@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->uuid('market_id')->nullable();
+            $table->string('whatsapp')->nullable();
             $table->timestamps();
         });
     }
