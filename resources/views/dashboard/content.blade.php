@@ -125,7 +125,7 @@
                         <div class="col-md-4">
                             <label for="date" class="form-label">Tanggal</label>
                             <input type="text" class="form-control flatpickr-basic" id="date" name="date"
-                                value="{{ session('date') ?? now()->format('d F Y') }}"
+                                value="{{ session('date') ?? now()->format('Y-m-d') }}"
                                 onchange="this.form.submit()" />
                         </div>
                     </div>
@@ -155,26 +155,30 @@
                     <thead>
                         <tr>
                             <th>Komoditas</th>
-                            <th>Harga Kemarin</th>
+                            <th>Pasar</th>
                             <th>Harga Hari Ini</th>
-                            <th>Perubahan Rupiah (Rp.)</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @foreach ($commodities as $commodity)
+                        @forelse ($prices as $price)
                             <tr>
                                 <td>
                                     {{-- <i class="ti ti-leaf ti-lg text-info me-3"></i> --}}
                                     <div class="badge rounded-pill bg-label-success me-3 p-2">
                                         <i class="ti ti-leaf ti-sm text-info"></i>
                                     </div>
-                                    <strong>{{ $commodity->name }}</strong>
+                                    <strong>{{ $price->commodity->name }}</strong>
                                 </td>
-                                <td>Rp. 13.000,-</td>
-                                <td>Rp. 13.000,- </td>
-                                <td>Rp. 0,- </td>
+                                <td>{{ $price->market->name }}</td>
+                                <td class="text-end">{{ $price->price }}</td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    <p>Belum ada data.</p>
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -197,7 +201,7 @@
         $(document).ready(function() {
             $('.select2').select2();
             $('.flatpickr-basic').flatpickr({
-                dateFormat: "d F Y",
+                dateFormat: "Y-m-d",
                 locale: "id" // Setting locale to Indonesian
             });
         });

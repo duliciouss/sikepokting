@@ -15,13 +15,13 @@ class CommodityController extends Controller
     public function index()
     {
         $uom = Uom::oldest('name')->get();
-        $parentCommodities = Commodity::with('uom')->where('type', 'GENERAL')->oldest('name')->get();
+        $parentCommodities = Commodity::with('uom')->oldest('name')->get();
         return view('commodities.index', compact('parentCommodities', 'uom'));
     }
 
     public function json()
     {
-        $commodities = Commodity::with(['parent', 'uom'])->where('type', 'DETAIL')->get();
+        $commodities = Commodity::with(['parent', 'uom'])->get();
 
         return DataTables::of($commodities)->addColumn('aksi', function ($data) {
             return '<button type="button" class="btn btn-icon btn-outline-warning btn-sm btn-edit" id="btn-edit" data-url="commodities/' . $data->id . '" data-method="PUT" data-id="' . $data->id . '"> <i class="ti ti-edit"> </i> </button> <button type="button" class="btn btn-icon btn-outline-danger btn-sm btn-delete" id="btn-delete" data-id="' . $data->id .  '"> <i class="ti ti-trash"> </i> </button>';

@@ -33,11 +33,13 @@
                                 <input class="form-control" type="text" id="email" name="email"
                                     value="{{ auth()->user()->email }}" placeholder="john.doe@example.com" />
                             </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="market" class="form-label">Pasar</label>
-                                <input type="text" class="form-control" id="market" name="market" readonly disabled
-                                    value="{{ auth()->user()->market->name }}" />
-                            </div>
+                            @if (auth()->user()->market)
+                                <div class="mb-3 col-md-6">
+                                    <label for="market" class="form-label">Pasar</label>
+                                    <input type="text" class="form-control" id="market" name="market" readonly
+                                        disabled value="{{ auth()->user()->market->name ?? '-' }}" />
+                                </div>
+                            @endif
                             <div class="mb-3 col-md-6">
                                 <label class="form-label" for="whatsapp_number">Nomor WhatsApp (WA)</label>
                                 <div class="input-group input-group-merge">

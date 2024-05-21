@@ -14,6 +14,7 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
+        $date = Carbon::parse($request->input('date') ?? now());
         session()->put('market_id', $request->input('market_id'));
         session()->put('commodity_id', $request->input('commodity_id'));
         session()->put('date', $request->input('date'));
@@ -26,7 +27,8 @@ class DashboardController extends Controller
         $marketUsers = User::whereHas('roles', function ($query) {
             $query->where('name', 'pasar');
         })->get();
-        return view('dashboard.default', compact('commodities', 'markets', 'marketUsers', 'users'));
+        $prices = Price::whereDate('date', $date)->with('commodity')->get();
+        return view('dashboard.default', compact('commodities', 'markets', 'marketUsers', 'users', 'prices'));
     }
 
     public function fullscreen()
