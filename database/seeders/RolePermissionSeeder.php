@@ -4,8 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use App\Models\Role;
+use App\Models\Permission;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -15,7 +15,7 @@ class RolePermissionSeeder extends Seeder
         $superadmin = Role::where('name', 'superadmin')->first();
         if ($superadmin) {
             $permissions = Permission::get();
-            Log::info($permissions);
+            Log::info($superadmin);
             $superadmin->syncPermissions($permissions);
         }
 
