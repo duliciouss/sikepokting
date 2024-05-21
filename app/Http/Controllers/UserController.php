@@ -13,21 +13,23 @@ class UserController extends Controller
 {
     public function index()
     {
-        $user = User::oldest('name')->where('role', '!=', 1)->get();
+        $user = User::oldest('name')->get();
         $market = Market::oldest('name')->get();
         return view('users.index', compact('market', 'user'));
     }
 
     public function json()
     {
-        $users = User::with('market')->oldest('name')->where('role', '!=', 1)->get();
+        $users = User::with('market')->with('roles')->oldest('name')->get();
 
         return DataTables::of($users)->addColumn('aksi', function ($data) {
             return '<button type="button" class="btn btn-icon btn-outline-warning btn-sm btn-edit" id="btn-edit" data-url="users/' . $data->id . '" data-method="PUT" data-id="' . $data->id . '"> <i class="ti ti-edit"> </i> </button> <button type="button" class="btn btn-icon btn-outline-danger btn-sm btn-delete" id="btn-delete" data-id="' . $data->id .  '"> <i class="ti ti-trash"> </i> </button> ';
-        })->rawColumns(['aksi'])->editColumn('date', function ($data) {
+        })->editColumn('date', function ($data) {
             $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $data->created_at)->format('d F Y');
             return $formatedDate;
-        })->addIndexColumn()->toJson();
+        })->addColumn('roles', function ($data) {
+            return $data->roles->pluck('name')->implode(', ');
+        })->rawColumns(['aksi'])->addIndexColumn()->toJson();
     }
 
     public function store(UserStoreRequest $request)

@@ -131,8 +131,8 @@
                     name: 'email'
                 },
                 {
-                    data: 'role',
-                    name: 'role'
+                    data: 'roles',
+                    name: 'roles'
                 },
                 {
                     data: 'market.name',
