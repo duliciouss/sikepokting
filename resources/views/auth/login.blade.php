@@ -76,17 +76,26 @@
                         <h4 class="mb-1 pt-2">Selamat Datang!</h4>
                         <p class="mb-4">Silakan masukan alamat email dan kata sandi untuk menggunakan aplikasi </p>
 
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label for="email" class="form-label">Alamat Email</label>
-                                <input type="text" class="form-control" id="email" name="email"
-                                    placeholder="Masukan alamat email" autofocus />
+                                <label for="username" class="form-label">Nama Pengguna</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="Masukan nama pengguna" autofocus />
                             </div>
                             <div class="mb-3 form-password-toggle">
                                 <div class="d-flex justify-content-between">
                                     <label class="form-label" for="password">Kata Sandi</label>
-                                    <a href="auth-forgot-password-basic.html">
+                                    <a href="#">
                                         <small>Lupa Kata Sandi?</small>
                                     </a>
                                 </div>
