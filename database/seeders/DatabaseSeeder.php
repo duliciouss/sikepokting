@@ -27,6 +27,11 @@ class DatabaseSeeder extends Seeder
             UomSeeder::class,
             GeneralCommoditySeeder::class,
             DetailCommoditySeeder::class,
+
+            PermissionsTableSeeder::class,
+            RolesTableSeeder::class,
+            RolePermissionSeeder::class,
+            UsersTableSeeder::class,
         ]);
     }
 }

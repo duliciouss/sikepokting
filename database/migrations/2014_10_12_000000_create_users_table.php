@@ -21,7 +21,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->integer('role')->comment('1: Superadmin; 2: Admin Pasar; 3: Monitoring')->default(2);
             $table->uuid('market_id')->nullable();
             $table->timestamps();
         });

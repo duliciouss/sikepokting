@@ -3,14 +3,13 @@
 namespace App\Models;
 
 use App\Traits\Uuid;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Unor extends Model
 {
-    use Uuid, HasFactory;
+    use HasFactory, HasUuids;
 
-    public $incrementing = false;
-    protected $keyType = 'uuid';
     protected $guarded = [];
 }
