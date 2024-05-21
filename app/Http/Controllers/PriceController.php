@@ -33,7 +33,7 @@ class PriceController extends Controller
                 $isDisabled = 'disabled';
             }
             $monitoring = '';
-            if (auth()->user()->role === 3) {
+            if (auth()->user()->hasRole('monitoring')) {
                 $monitoring = 'd-none';
             }
 

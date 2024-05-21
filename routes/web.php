@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
-    Route::group(['middleware' => 'permission:kelola harga'], function () {
+    Route::group(['middleware' => ['permission:create harga|view harga|update harga|delete harga|export harga']], function () {
         Route::resource('prices', PriceController::class)->except('show');
         Route::group(['prefix' => 'prices'], function () {
             Route::get('json', [PriceController::class, 'json'])->name('prices.json');
@@ -43,17 +43,17 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
-    Route::group(['middleware' => 'permission:kelola pengguna'], function () {
-        Route::resource('users', UserController::class)->except('show');
-        Route::group(['prefix' => 'users'], function () {
-            Route::get('json', [UserController::class, 'json'])->name('prices.json');
-        });
-    });
-
-    Route::group(['middleware' => 'permission:kelola persediaan'], function () {
+    Route::group(['middleware' => ['permission:create persediaan|view persediaan|update persediaan|delete persediaan|export persediaan']], function () {
         Route::resource('stocks', StockController::class)->except('show');
         Route::group(['prefix' => 'stocks'], function () {
             Route::get('json', [StockController::class, 'json'])->name('stocks.json');
+        });
+    });
+
+    Route::group(['middleware' => 'permission:kelola pengguna'], function () {
+        Route::resource('users', UserController::class)->except('show');
+        Route::group(['prefix' => 'users'], function () {
+            Route::get('json', [UserController::class, 'json'])->name('users.json');
         });
     });
 

@@ -25,22 +25,22 @@
                 </a>
             </li>
         @endcan
-        @can('kelola harga')
+        @canany(['create harga', 'view harga', 'update harga', 'delete harga', 'export harga'])
             <li class="menu-item {{ request()->is('prices') ? 'active' : '' }}">
                 <a href="{{ route('prices.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons ti ti-coin"></i>
                     <div data-i18n="Harga">Harga</div>
                 </a>
             </li>
-        @endcan
-        @can('kelola persediaan')
+        @endcanany
+        @canany(['create persediaan', 'view persediaan', 'update persediaan', 'delete persediaan', 'export persediaan'])
             <li class="menu-item {{ request()->is('stocks') ? 'active' : '' }}">
                 <a href="{{ route('stocks.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons ti ti-building-warehouse"></i>
                     <div data-i18n="Persediaan">Persediaan</div>
                 </a>
             </li>
-        @endcan
+        @endcanany
         @can('kelola komoditas')
             <li class="menu-item {{ request()->is('commodities') ? 'active' : '' }}">
                 <a href="{{ route('commodities.index') }}" class="menu-link">

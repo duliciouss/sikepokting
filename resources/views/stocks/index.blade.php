@@ -16,67 +16,71 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">Persediaan</h4>
         <div class="row">
-            <div class="col-md-12 col-xl-12">
-                <div class="card mb-4">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Form Tambah Persediaan</h5>
-                        <small class="text-muted float-end">Default label</small>
-                    </div>
-                    <div class="card-body">
-                        <form class="form-stock" action="{{ route('stocks.store') }}" method="POST">
-                            @csrf
-                            <div class="mb-3">
-                                <label class="form-label" for="date">Bulan</label><br>
-                                <input type="text" class="form-control flatpickr-basic" id="date" name="date"
-                                    placeholder="Masukan bulan" value="{{ now()->format('d-m-Y') }}" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="market_id">Pasar</label>
-                                <select id="market_id" class="select2 form-select" name="market_id">
-                                    @foreach ($markets as $market)
-                                        <option value="{{ $market->id }}">{{ $market->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="commodity_id">Komoditas</label>
-                                <select id="commodity_id" class="select2 form-select" name="commodity_id">
-                                    @foreach ($commodities as $commodity)
-                                        <option value="{{ $commodity->id }}">{{ $commodity->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="stock">Jumlah Persediaan</label>
-                                <input type="number" class="form-control" id="stock" name="stock"
-                                    placeholder="Masukan jumlah persediaan" autofocus />
-                            </div>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="menu-icon tf-icons ti ti-device-floppy"></i> Simpan
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 col-xl-12">
-                <!-- DataTable -->
-                <div class="card">
-                    <div class="card-datatable table-responsive pt-0">
-                        <table class="datatables-basic table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Tanggal</th>
-                                    <th>Pasar</th>
-                                    <th>Komoditas</th>
-                                    <th>Jumlah Persediaan</th>
-                                    <th> <i class="menu-icon tf-icons ti ti-settings"></i> </th>
-                                </tr>
-                            </thead>
-                        </table>
+            @can('create persediaan')
+                <div class="col-md-12 col-xl-12">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Form Tambah Persediaan</h5>
+                            <small class="text-muted float-end">Default label</small>
+                        </div>
+                        <div class="card-body">
+                            <form class="form-stock" action="{{ route('stocks.store') }}" method="POST">
+                                @csrf
+                                <div class="mb-3">
+                                    <label class="form-label" for="date">Bulan</label><br>
+                                    <input type="text" class="form-control flatpickr-basic" id="date" name="date"
+                                        placeholder="Masukan bulan" value="{{ now()->format('d-m-Y') }}" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="market_id">Pasar</label>
+                                    <select id="market_id" class="select2 form-select" name="market_id">
+                                        @foreach ($markets as $market)
+                                            <option value="{{ $market->id }}">{{ $market->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="commodity_id">Komoditas</label>
+                                    <select id="commodity_id" class="select2 form-select" name="commodity_id">
+                                        @foreach ($commodities as $commodity)
+                                            <option value="{{ $commodity->id }}">{{ $commodity->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="stock">Jumlah Persediaan</label>
+                                    <input type="number" class="form-control" id="stock" name="stock"
+                                        placeholder="Masukan jumlah persediaan" autofocus />
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="menu-icon tf-icons ti ti-device-floppy"></i> Simpan
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endcan
+            @can('view persediaan')
+                <div class="col-md-12 col-xl-12">
+                    <!-- DataTable -->
+                    <div class="card">
+                        <div class="card-datatable table-responsive pt-0">
+                            <table class="datatables-basic table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tanggal</th>
+                                        <th>Pasar</th>
+                                        <th>Komoditas</th>
+                                        <th>Jumlah Persediaan</th>
+                                        <th> <i class="menu-icon tf-icons ti ti-settings"></i> </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            @endcan
         </div>
     </div>
 @endsection

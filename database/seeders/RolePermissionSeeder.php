@@ -24,9 +24,17 @@ class RolePermissionSeeder extends Seeder
             'dashboard',
             'kelola komoditas',
             'kelola pengguna',
-            'kelola harga',
+            'create harga',
+            'view harga',
+            'update harga',
+            'delete harga',
+            'export harga',
+            'create persediaan',
+            'view persediaan',
+            'update persediaan',
+            'delete persediaan',
+            'export persediaan',
             'kelola unit kerja',
-            'kelola persediaan',
             'kelola satuan',
             'kelola pasar'
         ];
@@ -40,8 +48,16 @@ class RolePermissionSeeder extends Seeder
         // Pasar permissions
         $pasarPermissions = [
             'dashboard',
-            'kelola harga',
-            'kelola persediaan',
+            'create harga',
+            'view harga',
+            'update harga',
+            'delete harga',
+            'export harga',
+            'create persediaan',
+            'view persediaan',
+            'update persediaan',
+            'delete persediaan',
+            'export persediaan',
         ];
         $pasar = Role::where('name', 'pasar')->first();
         if ($pasar) {
@@ -53,6 +69,10 @@ class RolePermissionSeeder extends Seeder
         // Monitoring permissions
         $monitoringPermissions = [
             'dashboard',
+            'view harga',
+            'export harga',
+            'view persediaan',
+            'export persediaan',
         ];
         $monitoring = Role::where('name', 'monitoring')->first();
         if ($monitoring) {
