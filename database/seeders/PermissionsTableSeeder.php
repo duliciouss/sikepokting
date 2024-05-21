@@ -18,6 +18,7 @@ class PermissionsTableSeeder extends Seeder
             'kelola unit kerja',
             'kelola persediaan',
             'kelola satuan',
+            'kelola pasar'
         ];
 
         foreach ($permissions as $permission) {

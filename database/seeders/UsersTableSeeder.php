@@ -51,7 +51,7 @@ class UsersTableSeeder extends Seeder
             $user = User::create([
                 'id' => (string) Str::uuid(),
                 'name' => $userData['name'],
-                'username' => $userData['name'],
+                'username' => $userData['username'],
                 'email' => $userData['email'],
                 'password' => $userData['password'],
                 'market_id' => $userData['market_id']

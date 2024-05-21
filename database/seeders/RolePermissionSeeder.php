@@ -28,6 +28,7 @@ class RolePermissionSeeder extends Seeder
             'kelola unit kerja',
             'kelola persediaan',
             'kelola satuan',
+            'kelola pasar'
         ];
         $operator = Role::where('name', 'operator')->first();
         if ($operator) {

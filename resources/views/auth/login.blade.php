@@ -95,7 +95,7 @@
                             <div class="mb-3 form-password-toggle">
                                 <div class="d-flex justify-content-between">
                                     <label class="form-label" for="password">Kata Sandi</label>
-                                    <a href="#">
+                                    <a href="#" tabindex="-1">
                                         <small>Lupa Kata Sandi?</small>
                                     </a>
                                 </div>

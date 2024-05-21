@@ -15,7 +15,6 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PriceController extends Controller
 {
-
     public function index()
     {
         $prices = Price::all();

@@ -14,40 +14,47 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::group(['prefix' => 'dashboard'], function () {
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-        Route::get('fullscreen', [DashboardController::class, 'fullscreen'])->name('dashboard.fullscreen');
+    Route::group(['middleware' => 'permission:dashboard'], function () {
+        Route::group(['prefix' => 'dashboard'], function () {
+            Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+            Route::get('fullscreen', [DashboardController::class, 'fullscreen'])->name('dashboard.fullscreen');
+        });
     });
 
-    Route::resource('markets', MarketController::class)->except('show');
-    Route::group(['prefix' => 'markets'], function () {
-        Route::get('json', [MarketController::class, 'json'])->name('prices.json');
+    Route::group(['middleware' => 'permission:kelola pasar'], function () {
+        Route::resource('markets', MarketController::class)->except('show');
+        Route::group(['prefix' => 'markets'], function () {
+            Route::get('json', [MarketController::class, 'json'])->name('markets.json');
+        });
     });
 
-    Route::resource('commodities', CommodityController::class)->except('show');
-    Route::group(['prefix' => 'commodities'], function () {
-        Route::get('json', [CommodityController::class, 'json'])->name('prices.json');
+    Route::group(['middleware' => 'permission:kelola komoditas'], function () {
+        Route::resource('commodities', CommodityController::class)->except('show');
+        Route::group(['prefix' => 'commodities'], function () {
+            Route::get('json', [CommodityController::class, 'json'])->name('commodities.json');
+        });
     });
 
-    Route::resource('prices', PriceController::class)->except('show');
-    Route::group(['prefix' => 'prices'], function () {
-        Route::get('json', [PriceController::class, 'json'])->name('prices.json');
-        Route::post('export', [PriceController::class, 'export'])->name('prices.export');
+    Route::group(['middleware' => 'permission:kelola harga'], function () {
+        Route::resource('prices', PriceController::class)->except('show');
+        Route::group(['prefix' => 'prices'], function () {
+            Route::get('json', [PriceController::class, 'json'])->name('prices.json');
+            Route::post('export', [PriceController::class, 'export'])->name('prices.export');
+        });
     });
 
-    Route::resource('prices', PriceController::class)->except('show');
-    Route::group(['prefix' => 'prices'], function () {
-        Route::get('json', [PriceController::class, 'json'])->name('prices.json');
+    Route::group(['middleware' => 'permission:kelola pengguna'], function () {
+        Route::resource('users', UserController::class)->except('show');
+        Route::group(['prefix' => 'users'], function () {
+            Route::get('json', [UserController::class, 'json'])->name('prices.json');
+        });
     });
 
-    Route::resource('users', UserController::class)->except('show');
-    Route::group(['prefix' => 'users'], function () {
-        Route::get('json', [UserController::class, 'json'])->name('prices.json');
-    });
-
-    Route::resource('stocks', StockController::class)->except('show');
-    Route::group(['prefix' => 'stocks'], function () {
-        Route::get('json', [StockController::class, 'json'])->name('stocks.json');
+    Route::group(['middleware' => 'permission:kelola persediaan'], function () {
+        Route::resource('stocks', StockController::class)->except('show');
+        Route::group(['prefix' => 'stocks'], function () {
+            Route::get('json', [StockController::class, 'json'])->name('stocks.json');
+        });
     });
 
     Route::get('/get-token', [TestApiController::class, 'index']);

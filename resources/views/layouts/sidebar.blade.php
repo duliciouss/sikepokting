@@ -17,43 +17,53 @@
 
     <ul class="menu-inner py-1">
         <!-- Page -->
-        <li class="menu-item {{ request()->is('dashboard') ? 'active' : '' }}">
-            <a href="{{ route('dashboard') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                <div data-i18n="Dashboard">Dashboard</div>
-            </a>
-        </li>
-        <li class="menu-item {{ request()->is('prices') ? 'active' : '' }}">
-            <a href="{{ route('prices.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-coin"></i>
-                <div data-i18n="Harga">Harga</div>
-            </a>
-        </li>
-        <li class="menu-item {{ request()->is('stocks') ? 'active' : '' }}">
-            <a href="{{ route('stocks.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-building-warehouse"></i>
-                <div data-i18n="Persediaan">Persediaan</div>
-            </a>
-        </li>
-        @if (auth()->user()->role === 1)
+        @can('dashboard')
+            <li class="menu-item {{ request()->is('dashboard') ? 'active' : '' }}">
+                <a href="{{ route('dashboard') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                    <div data-i18n="Dashboard">Dashboard</div>
+                </a>
+            </li>
+        @endcan
+        @can('kelola harga')
+            <li class="menu-item {{ request()->is('prices') ? 'active' : '' }}">
+                <a href="{{ route('prices.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-coin"></i>
+                    <div data-i18n="Harga">Harga</div>
+                </a>
+            </li>
+        @endcan
+        @can('kelola persediaan')
+            <li class="menu-item {{ request()->is('stocks') ? 'active' : '' }}">
+                <a href="{{ route('stocks.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-building-warehouse"></i>
+                    <div data-i18n="Persediaan">Persediaan</div>
+                </a>
+            </li>
+        @endcan
+        @can('kelola komoditas')
             <li class="menu-item {{ request()->is('commodities') ? 'active' : '' }}">
                 <a href="{{ route('commodities.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons ti ti-leaf"></i>
                     <div data-i18n="Komoditas">Komoditas</div>
                 </a>
             </li>
+        @endcan
+        @can('kelola pasar')
             <li class="menu-item {{ request()->is('markets') ? 'active' : '' }}">
                 <a href="{{ route('markets.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons ti ti-building-store"></i>
                     <div data-i18n="Pasar">Pasar</div>
                 </a>
             </li>
+        @endcan
+        @can('kelola pengguna')
             <li class="menu-item {{ request()->is('users') ? 'active' : '' }}">
                 <a href="{{ route('users.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons ti ti-users"></i>
                     <div data-i18n="Pengguna">Pengguna</div>
                 </a>
             </li>
-        @endif
+        @endcan
     </ul>
 </aside>
