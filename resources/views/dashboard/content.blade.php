@@ -8,7 +8,7 @@
         {{ now()->format('d-m-Y') }}</h4>
     <div class="row">
         <!-- Statistics -->
-        <div class="col-lg-8 mb-4 col-md-12">
+        <div class="col-lg-{{ $prices->count() > 0 ? '8' : '12' }} mb-4 col-md-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h5 class="card-title mb-0">Statistik</h5>
