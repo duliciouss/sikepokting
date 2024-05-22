@@ -65,18 +65,21 @@
             </div>
         </div>
         <!-- Reviews -->
-        <div class="col-lg-2 col-6 mb-4">
-            <div class="card">
-                <div class="card-body text-center">
-                    <div class="badge rounded-pill p-2 bg-label-primary mb-2">
-                        <i class="ti ti-coin ti-sm"></i>
+        @if ($prices->count() > 0)
+            <div class="col-lg-2 col-6 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="badge rounded-pill p-2 bg-label-primary mb-2">
+                            <i class="ti ti-coin ti-sm"></i>
+                        </div>
+                        <h5 class="card-title mb-2">Rp. {{ $prices->first()->price }},-</h5>
+                        <small>{{ $prices->first()->commodity->name }} ({{ $prices->first()->commodity->uom->name }} )
+                            hari
+                            ini</small>
                     </div>
-                    <h5 class="card-title mb-2">Rp. {{ $prices->first()->price }},-</h5>
-                    <small>{{ $prices->first()->commodity->name }} ({{ $prices->first()->commodity->uom->name }} ) hari
-                        ini</small>
                 </div>
             </div>
-        </div>
+        @endif
 
         <!-- Orders -->
         <div class="col-lg-2 col-6 mb-4">
