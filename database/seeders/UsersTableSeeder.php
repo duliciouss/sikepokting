@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'Super Admin',
                 'username' => 'suadmin',
-                'email' => 'superadmin@example.com',
+                'email' => 'superadmin@sikepokting.subang.go.id',
                 'password' => Hash::make('terbaik123'),
                 'role' => 'superadmin',
                 'market_id' => null
@@ -24,23 +24,15 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'Operator User',
                 'username' => 'operator',
-                'email' => 'operator@example.com',
+                'email' => 'operator@sikepokting.subang.go.id',
                 'password' => Hash::make('operator'),
                 'role' => 'operator',
                 'market_id' => null
             ],
             [
-                'name' => 'Pasar Subang',
-                'username' => 'pasar_subang',
-                'email' => 'pasar@example.com',
-                'password' => Hash::make('pasar_subang'),
-                'role' => 'pasar',
-                'market_id' => Market::where('name', 'Pasar Subang')->first()->id
-            ],
-            [
                 'name' => 'Monitoring User',
                 'username' => 'monitoring',
-                'email' => 'monitoring@example.com',
+                'email' => 'monitoring@sikepokting.subang.go.id',
                 'password' => Hash::make('monitoring'),
                 'role' => 'monitoring',
                 'market_id' => null
@@ -58,6 +50,21 @@ class UsersTableSeeder extends Seeder
             ]);
 
             $user->assignRole($userData['role']);
+        }
+
+        $markets = Market::all();
+        foreach ($markets as $market) {
+            $username = strtolower(str_replace(" ", "-", $market->name));
+            $user = User::create([
+                'id' => (string) Str::uuid(),
+                'name' => $market->name,
+                'username' => $username,
+                'email' => $username . '@sikepokting.subang.go.id',
+                'password' => Hash::make($username),
+                'market_id' => $market->id
+            ]);
+
+            $user->assignRole('pasar');
         }
     }
 }
