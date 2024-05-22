@@ -42,7 +42,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('prices', PriceController::class)->except('show');
         Route::group(['prefix' => 'prices'], function () {
             Route::get('json', [PriceController::class, 'json'])->name('prices.json');
-            Route::post('export', [PriceController::class, 'export'])->name('prices.export');
+            // Route::post('export', [PriceController::class, 'export'])->name('prices.export');
+            Route::get('export', [PriceController::class, 'export'])->name('prices.export');
         });
     });
 

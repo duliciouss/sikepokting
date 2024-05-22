@@ -45,15 +45,18 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Project</td>
-                <td>Client</td>
-                <td>Users</td>
-                <td>Status</td>
-                <td>Actions</td>
-                <td>Actions</td>
-                <td>Actions</td>
-            </tr>
+            @foreach ($prices as $price)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $price->commodity->name }}</td>
+                    <td>{{ $price->commodity->uom->name }}</td>
+                    <td>0</td>
+                    <td>{{ $price->price }}</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </body>

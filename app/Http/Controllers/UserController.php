@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\Market;
+use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
@@ -14,8 +15,9 @@ class UserController extends Controller
     public function index()
     {
         $user = User::oldest('name')->get();
-        $market = Market::oldest('name')->get();
-        return view('users.index', compact('market', 'user'));
+        $markets = Market::oldest('name')->get();
+        $roles = Role::where('name', '!=', 'superadmin')->get();
+        return view('users.index', compact('markets', 'user', 'roles'));
     }
 
     public function json()
@@ -37,11 +39,14 @@ class UserController extends Controller
         try {
             $createUser = User::create([
                 'name' => $request->name,
+                'username' => strtolower(str_replace(' ', '', $request->name)),
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'role' => $request->role,
                 'market_id' => $request->market_id,
             ]);
+
+            $createUser->assignRole($request->role);
         } catch (\Throwable $th) {
             throw $th;
         }

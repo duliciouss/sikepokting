@@ -48,8 +48,18 @@
                             <div class="mb-3">
                                 <label class="form-label" for="role">Hak Akses</label>
                                 <select id="role" class="select2 form-select" name="role">
-                                    <option value="2">Admin Pasar</option>
-                                    <option value="3">Monitoring</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="market">Pasar</label>
+                                <select id="market" class="select2 form-select" name="market">
+                                    <option value="">-</option>
+                                    @foreach ($markets as $market)
+                                        <option value="{{ $market->id }}">{{ $market->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary">
@@ -67,7 +77,8 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Nama Pengguna</th>
+                                    <th>Nama Lengkap</th>
+                                    <th>Pengguna</th>
                                     <th>Email</th>
                                     <th>Hak Akses</th>
                                     <th>Pasar</th>
@@ -125,6 +136,10 @@
                 {
                     data: 'name',
                     name: 'name'
+                },
+                {
+                    data: 'username',
+                    name: 'username'
                 },
                 {
                     data: 'email',

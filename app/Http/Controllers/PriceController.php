@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\PriceExport;
+use App\Exports\PricesExport;
 use App\Http\Requests\PriceStoreRequest;
 use App\Http\Requests\PriceUpdateRequest;
 use App\Models\Commodity;
 use App\Models\Market;
 use App\Models\Price;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -91,6 +90,6 @@ class PriceController extends Controller
 
     public function export()
     {
-        return Excel::download(new PriceExport, 'price-' . now() . '.xlsx');
+        return Excel::download(new PricesExport, 'DAFTARHARGA' . now()->format('dmYHis') . '.xlsx');
     }
 }
