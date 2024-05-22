@@ -79,21 +79,20 @@
                     </div>
                 </div>
             </div>
-        @endif
-
-        <!-- Orders -->
-        <div class="col-lg-2 col-6 mb-4">
-            <div class="card">
-                <div class="card-body text-center">
-                    <div class="badge rounded-pill p-2 bg-label-success mb-2">
-                        <i class="ti ti-file-download ti-sm"></i>
+            <!-- Orders -->
+            <div class="col-lg-2 col-6 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="badge rounded-pill p-2 bg-label-success mb-2">
+                            <i class="ti ti-file-download ti-sm"></i>
+                        </div>
+                        <h5 class="card-title mb-2"><a href="{{ route('prices.export') }}" target="_blank">Download</a>
+                        </h5>
+                        <small>Data harga</small>
                     </div>
-                    <h5 class="card-title mb-2"><a href="{{ route('prices.export') }}" target="_blank">Download</a>
-                    </h5>
-                    <small>Data harga</small>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 
     <div class="col-lg-12 mb-4 col-md-12">
