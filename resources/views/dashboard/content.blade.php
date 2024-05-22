@@ -71,8 +71,9 @@
                     <div class="badge rounded-pill p-2 bg-label-primary mb-2">
                         <i class="ti ti-coin ti-sm"></i>
                     </div>
-                    <h5 class="card-title mb-2">Rp. 7.000,-</h5>
-                    <small>Beras (Kg) hari ini</small>
+                    <h5 class="card-title mb-2">Rp. {{ $prices->first()->price }},-</h5>
+                    <small>{{ $prices->first()->commodity->name }} ({{ $prices->first()->commodity->uom->name }} ) hari
+                        ini</small>
                 </div>
             </div>
         </div>
@@ -84,7 +85,8 @@
                     <div class="badge rounded-pill p-2 bg-label-success mb-2">
                         <i class="ti ti-file-download ti-sm"></i>
                     </div>
-                    <h5 class="card-title mb-2"><a href="{{ route('prices.export') }}" target="_blank">Download</a></h5>
+                    <h5 class="card-title mb-2"><a href="{{ route('prices.export') }}" target="_blank">Download</a>
+                    </h5>
                     <small>Data harga</small>
                 </div>
             </div>
